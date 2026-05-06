@@ -131,7 +131,7 @@ body.chover #cring{width:72px;height:72px;border-color:rgba(200,150,90,.65)}
 body.clink  #cring{width:56px;height:56px}
 
 /* ── SCROLL PROGRESS ── */
-#prog{position:fixed;right:1.8rem;top:50%;transform:translateY(-50%);width:1px;height:90px;background:var(--border);z-index:500}
+#prog{position:fixed;left:1.6rem;top:50%;transform:translateY(-50%);width:1px;height:90px;background:var(--border);z-index:500}
 #pfill{position:absolute;top:0;left:0;width:100%;height:0%;background:var(--gold);transition:height .08s linear}
 
 /* ── MAIN NAV ── */
@@ -245,25 +245,36 @@ nav{
 
 /* ── DOT NAV ── */
 #dotnav{
-  position:fixed;left:1.6rem;top:50%;transform:translateY(-50%);
-  display:flex;flex-direction:column;gap:1rem;z-index:500;
+  position:fixed;right:1.8rem;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:.85rem;z-index:500;
+  align-items:flex-end;
 }
-.dn-item{display:flex;align-items:center;gap:.9rem;cursor:pointer;text-decoration:none}
+.dn-item{
+  position:relative;display:flex;align-items:center;
+  justify-content:flex-end;cursor:pointer;text-decoration:none;
+  padding:.25rem 0;
+}
 .dn-dot{
-  width:4px;height:4px;border-radius:50%;flex-shrink:0;
-  background:rgba(240,236,228,.2);
-  transition:background .4s var(--ease),height .4s var(--ease),border-radius .4s var(--ease);
+  width:3px;height:3px;border-radius:50%;flex-shrink:0;
+  background:rgba(240,236,228,.25);
+  transition:background .4s var(--ease),height .4s var(--ease),
+             border-radius .4s var(--ease),width .4s var(--ease);
 }
-.dn-item.act .dn-dot{background:var(--gold);height:20px;border-radius:2px}
+.dn-item:hover .dn-dot{background:rgba(240,236,228,.6);width:5px;height:5px}
+.dn-item.act .dn-dot{background:var(--gold);height:24px;border-radius:2px;width:2px}
+/* Tooltip — rechts der dot, erscheint nur beim Hover */
 .dn-lbl{
-  font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;
+  position:absolute;right:calc(100% + .8rem);
+  font-family:'Raleway',sans-serif;
+  font-size:.47rem;letter-spacing:.28em;text-transform:uppercase;
   color:var(--muted);white-space:nowrap;
-  opacity:0;transform:translateX(-4px);
-  transition:opacity .25s,transform .25s;pointer-events:none;
+  background:rgba(10,10,10,.75);backdrop-filter:blur(6px);
+  padding:.3rem .6rem;border:1px solid var(--border);
+  opacity:0;transform:translateX(4px);pointer-events:none;
+  transition:opacity .2s,transform .2s;
 }
-.dn-item:hover .dn-lbl,.dn-item.act .dn-lbl{opacity:1;transform:translateX(0)}
-.dn-item.act .dn-lbl{color:var(--gold)}
-.dn-item:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:2px}
+.dn-item:hover .dn-lbl{opacity:1;transform:translateX(0)}
+.dn-item:focus-visible{outline:2px solid var(--gold);outline-offset:6px;border-radius:2px}
 
 /* ── SECTION ── */
 .section{position:relative;padding:9rem 3.5rem;min-height:100vh}
