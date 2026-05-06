@@ -546,6 +546,64 @@
   </div>
 </footer>
 
+<!-- Framer Motion (vanilla/framework-agnostic, CDN) -->
+<script type="module">
+import { animate, inView, scroll, spring } from 'https://cdn.jsdelivr.net/npm/motion@12/+esm';
+
+/* ── FRAMER MOTION: Section headings slide-up ── */
+inView('.sec-h2', ({ target }) => {
+  animate(target, { opacity: [0, 1], y: [40, 0] }, {
+    duration: 0.9, easing: spring({ stiffness: 60, damping: 14 })
+  });
+}, { amount: 0.3 });
+
+/* ── FRAMER MOTION: Section labels & badges ── */
+inView('.sec-lbl, .sec-badge, .ct-eye', ({ target }) => {
+  animate(target, { opacity: [0, 1], x: [-16, 0] }, {
+    duration: 0.6, easing: [0.16, 1, 0.3, 1]
+  });
+}, { amount: 0.5 });
+
+/* ── FRAMER MOTION: Ghost numbers parallax on scroll ── */
+document.querySelectorAll('.ghost').forEach(el => {
+  const section = el.closest('.section');
+  if (!section) return;
+  scroll(
+    animate(el, { y: ['-10%', '10%'], opacity: [0.025, 0.012] }),
+    { target: section, offset: ['start end', 'end start'] }
+  );
+});
+
+/* ── FRAMER MOTION: Scroll-driven card scale ── */
+document.querySelectorAll('.card:not([aria-hidden])').forEach(card => {
+  scroll(
+    animate(card, { scale: [0.96, 1] }),
+    { target: card, offset: ['start end', 'center center'] }
+  );
+});
+
+/* ── FRAMER MOTION: Hero title letter spacing on scroll ── */
+const heroH1 = document.querySelector('.hero-h1');
+if (heroH1) {
+  scroll(
+    animate(heroH1, { letterSpacing: ['0.06em', '0.18em'], opacity: [1, 0] }),
+    { target: document.getElementById('hero'), offset: ['center start', 'end start'] }
+  );
+}
+
+/* ── FRAMER MOTION: Contact section entrance ── */
+inView('#contact .ct-h2', ({ target }) => {
+  animate(target, { opacity: [0, 1], y: [60, 0] }, {
+    duration: 1.1, easing: spring({ stiffness: 50, damping: 12 })
+  });
+}, { amount: 0.4 });
+
+/* ── FRAMER MOTION: Footer fade ── */
+inView('footer', ({ target }) => {
+  animate(target, { opacity: [0, 1] }, { duration: 1.2, delay: 0.2 });
+}, { amount: 0.5 });
+</script>
+
 <script src="js/main.js"></script>
 </body>
 </html>
