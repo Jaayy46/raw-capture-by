@@ -14,4 +14,4 @@ Disallow: /
 User-agent: Claude-Web
 Disallow: /
 
-Sitemap: https://livioraschle.com/sitemap.xml
+Sitemap: https://raw-capture-by.com/sitemap.xml

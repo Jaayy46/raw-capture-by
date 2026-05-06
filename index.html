@@ -5,50 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="color-scheme" content="dark">
-  <title>Livio Raschle — Photography</title>
+  <title>Livio Raschle Photography — Schweizer Fotograf | Portfolio</title>
 
   <!-- SEO -->
   <meta name="description" content="Livio Raschle Photography — Landschaft, Konzerte, Sport, Motorsport, Wildlife und Architektur. Professionelle Fotografie aus der Schweiz.">
-  <meta name="keywords" content="Fotografie, Schweiz, Landschaft, Konzert, Motorsport, Sport, Wildlife, Architektur, Fotograf">
+  <meta name="keywords" content="Fotografie, Schweiz, Landschaft, Konzert, Motorsport, Sport, Wildlife, Architektur, Fotograf, Schweizer Fotograf">
   <meta name="author" content="Livio Raschle">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://livioraschle.com/">
+  <link rel="canonical" href="https://raw-capture-by.com/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Livio Raschle — Photography">
   <meta property="og:description" content="Professionelle Fotografie aus der Schweiz — Landschaft, Konzerte, Sport, Motorsport, Wildlife und Architektur.">
-  <meta property="og:url" content="https://livioraschle.com/">
-  <meta property="og:image" content="https://livioraschle.com/images/A7_06806.jpg">
+  <meta property="og:url" content="https://raw-capture-by.com/">
+  <meta property="og:image" content="https://raw-capture-by.com/images/A7_06806.jpg">
   <meta property="og:locale" content="de_CH">
+  <meta property="og:site_name" content="Livio Raschle Photography">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Livio Raschle — Photography">
   <meta name="twitter:description" content="Professionelle Fotografie aus der Schweiz.">
-  <meta name="twitter:image" content="https://livioraschle.com/images/A7_06806.jpg">
+  <meta name="twitter:image" content="https://raw-capture-by.com/images/A7_06806.jpg">
 
-  <!-- Fonts -->
+  <!-- Hero image preload (LCP) -->
+  <link rel="preload" as="image" href="images/A7_06806.jpg" fetchpriority="high">
+
+  <!-- Fonts: non-render-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,200&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,200&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,200&display=swap" rel="stylesheet"></noscript>
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
-  <!-- Fallback falls css/ Ordner fehlt im Deploy -->
-  <link rel="stylesheet" href="style.css">
 
   <!-- JSON-LD structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Livio Raschle",
-    "jobTitle": "Fotograf",
-    "url": "https://livioraschle.com",
-    "email": "livioraschle@gmail.com",
-    "address": { "@type": "PostalAddress", "addressCountry": "CH" },
-    "sameAs": []
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Livio Raschle",
+      "jobTitle": "Fotograf",
+      "url": "https://raw-capture-by.com",
+      "email": "livioraschle@gmail.com",
+      "image": "https://raw-capture-by.com/images/A7_06806.jpg",
+      "address": { "@type": "PostalAddress", "addressCountry": "CH", "addressRegion": "Schweiz" },
+      "knowsAbout": ["Landschaftsfotografie","Konzertfotografie","Sportfotografie","Motorsport","Wildlife","Architekturfotografie"],
+      "sameAs": []
+    },
+    "name": "Livio Raschle Photography — Portfolio",
+    "description": "Professionelles Fotografie-Portfolio von Livio Raschle. Landschaft, Konzerte, Sport, Motorsport, Wildlife und Architektur aus der Schweiz.",
+    "url": "https://raw-capture-by.com"
   }
   </script>
 </head>
@@ -106,7 +117,7 @@
 
 <!-- HERO -->
 <section id="hero" aria-label="Portfolio Einleitung">
-  <img class="hero-img" id="hero-img" src="images/A7_06806.jpg" alt="Spiegelung der Alpengipfel im Bergsee, Appenzell" width="1920" height="1280" draggable="false">
+  <img class="hero-img" id="hero-img" src="images/A7_06806.jpg" alt="Spiegelung der Alpengipfel im Bergsee, Appenzell" width="1920" height="1280" draggable="false" fetchpriority="high" decoding="async">
   <div class="hero-grad" aria-hidden="true"></div>
   <div class="hero-content">
     <div>
