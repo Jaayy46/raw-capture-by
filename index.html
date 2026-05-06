@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="color-scheme" content="dark">
+  <title>Livio Raschle — Photography</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Livio Raschle Photography — Landschaft, Konzerte, Sport, Motorsport, Wildlife und Architektur. Professionelle Fotografie aus der Schweiz.">
+  <meta name="keywords" content="Fotografie, Schweiz, Landschaft, Konzert, Motorsport, Sport, Wildlife, Architektur, Fotograf">
+  <meta name="author" content="Livio Raschle">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://livioraschle.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Livio Raschle — Photography">
+  <meta property="og:description" content="Professionelle Fotografie aus der Schweiz — Landschaft, Konzerte, Sport, Motorsport, Wildlife und Architektur.">
+  <meta property="og:url" content="https://livioraschle.com/">
+  <meta property="og:image" content="https://livioraschle.com/images/A7_06806.jpg">
+  <meta property="og:locale" content="de_CH">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Livio Raschle — Photography">
+  <meta name="twitter:description" content="Professionelle Fotografie aus der Schweiz.">
+  <meta name="twitter:image" content="https://livioraschle.com/images/A7_06806.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,200&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Fallback falls css/ Ordner fehlt im Deploy -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Livio Raschle",
+    "jobTitle": "Fotograf",
+    "url": "https://livioraschle.com",
+    "email": "livioraschle@gmail.com",
+    "address": { "@type": "PostalAddress", "addressCountry": "CH" },
+    "sameAs": []
+  }
+  </script>
+</head>
+<body>
+
+<div id="loader" aria-hidden="true"><span class="ld-name">Livio Raschle</span><div class="ld-bar"></div></div>
+<div id="bg" aria-hidden="true"></div>
+<div id="cdot" aria-hidden="true"></div>
+<div id="cring" aria-hidden="true"></div>
+<div id="prog" aria-hidden="true" role="presentation"><div id="pfill"></div></div>
+
+<!-- DOT NAV -->
+<nav id="dotnav" aria-label="Sektionsnavigation">
+  <a href="#hero"        class="dn-item act" data-target="hero"        aria-label="Intro"><div class="dn-dot"></div><span class="dn-lbl">Intro</span></a>
+  <a href="#landschaft"  class="dn-item"     data-target="landschaft"  aria-label="Landschaft"><div class="dn-dot"></div><span class="dn-lbl">Landschaft</span></a>
+  <a href="#konzerte"    class="dn-item"     data-target="konzerte"    aria-label="Konzerte"><div class="dn-dot"></div><span class="dn-lbl">Konzerte</span></a>
+  <a href="#sport"       class="dn-item"     data-target="sport"       aria-label="Sport"><div class="dn-dot"></div><span class="dn-lbl">Sport</span></a>
+  <a href="#motorsport"  class="dn-item"     data-target="motorsport"  aria-label="Motorsport"><div class="dn-dot"></div><span class="dn-lbl">Motorsport</span></a>
+  <a href="#wildlife"    class="dn-item"     data-target="wildlife"    aria-label="Wildlife"><div class="dn-dot"></div><span class="dn-lbl">Wildlife</span></a>
+  <a href="#architektur" class="dn-item"     data-target="architektur" aria-label="Architektur"><div class="dn-dot"></div><span class="dn-lbl">Architektur</span></a>
+  <a href="#contact"     class="dn-item"     data-target="contact"     aria-label="Kontakt"><div class="dn-dot"></div><span class="dn-lbl">Kontakt</span></a>
+</nav>
+
+<!-- LIGHTBOX -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Bildansicht">
+  <button class="lbx" id="lbx" aria-label="Schliessen"></button>
+  <button class="lbnav" id="lbprev" aria-label="Vorheriges Bild">&#8592;</button>
+  <img id="lbimg" src="" alt="" draggable="false">
+  <div id="lbwm" aria-hidden="true">© Livio Raschle Photography</div>
+  <button class="lbnav" id="lbnext" aria-label="Nächstes Bild">&#8594;</button>
+  <div id="lbctr" aria-live="polite"></div>
+</div>
+
+<!-- NAV -->
+<nav aria-label="Hauptnavigation">
+  <a href="#hero" class="nav-logo" aria-label="Livio Raschle — Startseite">Livio Raschle</a>
+  <button class="mbtn" id="mbtn" aria-expanded="false" aria-controls="moverlay" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div id="moverlay" role="navigation" aria-label="Seitennavigation">
+  <ul class="mlist">
+    <li class="mitem"><a href="#landschaft"  class="mlink"><span class="mnum">01</span>Landschaft</a></li>
+    <li class="mitem"><a href="#konzerte"    class="mlink"><span class="mnum">02</span>Konzerte</a></li>
+    <li class="mitem"><a href="#sport"       class="mlink"><span class="mnum">03</span>Sport</a></li>
+    <li class="mitem"><a href="#motorsport"  class="mlink"><span class="mnum">04</span>Motorsport</a></li>
+    <li class="mitem"><a href="#wildlife"    class="mlink"><span class="mnum">05</span>Wildlife</a></li>
+    <li class="mitem"><a href="#architektur" class="mlink"><span class="mnum">06</span>Architektur</a></li>
+    <li class="mitem"><a href="#contact"     class="mlink"><span class="mnum">07</span>Kontakt</a></li>
+  </ul>
+  <p class="minfo">© 2026 Livio Raschle Photography</p>
+</div>
+
+<!-- HERO -->
+<section id="hero" aria-label="Portfolio Einleitung">
+  <img class="hero-img" id="hero-img" src="images/A7_06806.jpg" alt="Spiegelung der Alpengipfel im Bergsee, Appenzell" width="1920" height="1280" draggable="false">
+  <div class="hero-grad" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div>
+      <span class="hero-eye">Fotografie Portfolio</span>
+      <h1 class="hero-h1">
+        <span class="hl"><span>Livio</span></span>
+        <span class="hl"><span>Raschle</span></span>
+      </h1>
+      <a href="#landschaft" class="hero-cta" aria-label="Portfolio entdecken">
+        Portfolio entdecken <span class="hero-cta-arr">↓</span>
+      </a>
+      <div class="hero-stats" aria-label="Portfolio Statistiken">
+        <div><span class="h-stat-val">65+</span><span class="h-stat-lbl">Bilder</span></div>
+        <div><span class="h-stat-val">6</span><span class="h-stat-lbl">Kategorien</span></div>
+        <div><span class="h-stat-val">4+</span><span class="h-stat-lbl">Jahre</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <span class="hero-tag">Momente · Emotionen</span>
+      <span class="hero-tag">Geschichten · Schweiz</span>
+      <div class="hero-scroll" aria-hidden="true">
+        <div class="hs-bar"></div>
+        <span class="hs-txt">Scrollen</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
+<!-- 01 LANDSCHAFT -->
+<section id="landschaft" class="section" data-bg="#030f06" data-accent="#4ade80" aria-label="Landschaft">
+  <div class="ghost" aria-hidden="true">01</div>
+  <div class="sec-hdr">
+    <div>
+      <span class="sec-lbl">01 — Landschaft</span>
+      <h2 class="sec-h2"><span class="stl">Land-</span><span class="stl l2">schaft</span></h2>
+      <div class="sec-badge"><span class="sec-badge-dot"></span>16 Aufnahmen</div>
+    </div>
+    <p class="sec-desc fi">Von verspiegelten Bergseen bis zu mystischen Nebelwäldern und goldenen Sonnenuntergängen über den Alpen.</p>
+  </div>
+
+  <div class="ls-main">
+    <div class="card fi" tabindex="0" role="button" aria-label="Bergsee Reflexion vergrössern">
+      <img src="images/A7_06806.jpg" alt="Spiegelung der Alpen im Seealpsee, Appenzell" loading="lazy" width="900" height="1350" draggable="false">
+      <div class="cap">Seealpsee · Appenzell</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Sonnenaufgang Madeira vergrössern">
+      <img src="images/_DSC0828.jpg" alt="Sonnenaufgang über dem Wolkenmeer, Madeira" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Sonnenaufgang · Madeira</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Seilbahn Alpen vergrössern">
+      <img src="images/A7_06695.jpg" alt="Rote Seilbahn vor Alpengipfeln" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Seilbahn · Alpen</div>
+    </div>
+  </div>
+
+  <div class="ls-r1">
+    <div class="card fi" tabindex="0" role="button" aria-label="Schneetannen vergrössern">
+      <img src="images/_A7_2126.jpg" alt="Verschneite Tannen unter blauem Winterhimmel" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Schneetannen</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Wintersonnenuntergang vergrössern">
+      <img src="images/_A7_2181.jpg" alt="Goldener Sonnenuntergang über schneebedeckten Berggipfeln" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Winterabend · Alpen</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Gipfelkreuz vergrössern">
+      <img src="images/_A7_2246.jpg" alt="Verschneite Berghütte bei Sonnenuntergang mit gefrorenem Kreuz" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Gipfelkreuz · Alpen</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Nebelbaum vergrössern">
+      <img src="images/_DSC0637.jpg" alt="Einzelner Baum im dichten Nebel, Madeira" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Nebelwald · Madeira</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Bergsee türkis vergrössern">
+      <img src="images/_DSC8676.jpg" alt="Türkisfarbener Bergsee mit Felsen" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Bergsee · Wallis</div>
+    </div>
+  </div>
+
+  <div class="ls-r2">
+    <div class="card fi" tabindex="0" role="button" aria-label="Schneewald vergrössern">
+      <img src="images/_A7_0580.jpg" alt="Verschneite Alpenlandschaft mit Kiefern" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Winterwald</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Schneehütte vergrössern">
+      <img src="images/_A7_0662.jpg" alt="Einsame Hütte in weitem Schneefeld" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Einsamkeit · Schnee</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Nebelberge vergrössern">
+      <img src="images/_DSC0957.jpg" alt="Schmaler Bergpfad durch Felsen im Nebel, Madeira" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Bergpfad · Madeira</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Baum auf Felsen vergrössern">
+      <img src="images/_DSC3572.jpg" alt="Einsamer Baum auf Felsspitze vor blauem Himmel" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Einsamer Baum</div>
+    </div>
+  </div>
+
+  <div class="ls-r3">
+    <div class="card fi" tabindex="0" role="button" aria-label="Wolkenmeer Sonnenuntergang vergrössern">
+      <img src="images/_A7_2234.jpg" alt="Sonnenuntergang über einem goldenen Wolkenmeer mit Schneefeld" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Wolkenmeer · Sonnenuntergang</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Schneepanorama vergrössern">
+      <img src="images/_A7_0668.jpg" alt="Weites Schneepanorama mit Alpengipfeln" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Winterpanorama · Alpen</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Bucht mit Segelboot vergrössern">
+      <img src="images/_DSC0368.jpg" alt="Stille Bucht mit einsamen Segelboot von oben, Madeira" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Bucht · Madeira</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Küstenklippen vergrössern">
+      <img src="images/_DSC0357.jpg" alt="Dramatische Küstenklippen im goldenen Gegenlicht, Madeira" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Klippen · Atlantik</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
+<!-- 02 KONZERTE -->
+<section id="konzerte" class="section" data-bg="#07021a" data-accent="#a855f7" aria-label="Konzerte und Events">
+  <div class="ghost" aria-hidden="true">02</div>
+  <div class="sec-hdr">
+    <div>
+      <span class="sec-lbl">02 — Konzerte</span>
+      <h2 class="sec-h2"><span class="stl">Kon-</span><span class="stl l2">zerte</span></h2>
+      <div class="sec-badge"><span class="sec-badge-dot"></span>8 Aufnahmen</div>
+    </div>
+    <p class="sec-desc fi">Energie, Emotion und Licht — die Magie einer Live-Performance eingefangen im entscheidenden Bruchteil einer Sekunde.</p>
+  </div>
+
+  <div class="kz-stage">
+    <div class="card fi" tabindex="0" role="button" aria-label="Theater Bühnenfoto vergrössern">
+      <img src="images/A7_00019.jpg" alt="Musiker auf Theaterbühne mit warmem dramatischen Licht" loading="lazy" width="700" height="1050" draggable="false">
+      <div class="cap">Theater · Bühne</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Konzertsilhouette vergrössern">
+      <img src="images/A7_00207.jpg" alt="Zwei Musiker als Silhouetten vor violettem Bühnenlicht" loading="lazy" width="700" height="1050" draggable="false">
+      <div class="cap">Live Concert</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="DJ Konzert vergrössern">
+      <img src="images/A7_00352.jpg" alt="DJ auf Bühne mit intensiven blauen Strahlern" loading="lazy" width="700" height="1050" draggable="false">
+      <div class="cap">DJ Set</div>
+    </div>
+  </div>
+
+  <div class="kz-sub">
+    <div class="card fi" tabindex="0" role="button" aria-label="Konzertlichter vergrössern">
+      <img src="images/A7_08088.jpg" alt="Verwischte Lichtstrahlen und Bewegungsunschärfe auf der Bühne" loading="lazy" width="700" height="500" draggable="false">
+      <div class="cap">Lichtspiel</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Sänger auf Bühne vergrössern">
+      <img src="images/A7_09796.jpg" alt="Sänger mit Mikrofon vor Rauch und dunkler Bühne" loading="lazy" width="700" height="500" draggable="false">
+      <div class="cap">Live · Sänger</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Bühnenshow vergrössern">
+      <img src="images/_A7_1219.jpg" alt="Sänger auf bunter Konzertbühne mit Vorhang und Scheinwerfern" loading="lazy" width="700" height="500" draggable="false">
+      <div class="cap">Bühnenshow</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Konzert Strahler vergrössern">
+      <img src="images/_A7_1240.jpg" alt="Sänger auf Bühne mit blauen und gelben Strahlern" loading="lazy" width="700" height="500" draggable="false">
+      <div class="cap">Stage Lights</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Rapper auf Bühne vergrössern">
+      <img src="images/_A7_1361.jpg" alt="Rapper auf Bühne streckt Arm aus, Publikum filmt mit Smartphones" loading="lazy" width="700" height="500" draggable="false">
+      <div class="cap">Live Rap · Crowd</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
+<!-- 03 SPORT -->
+<section id="sport" class="section" data-bg="#110500" data-accent="#f97316" aria-label="Sport und Abenteuer">
+  <div class="ghost" aria-hidden="true">03</div>
+  <div class="sec-hdr">
+    <div>
+      <span class="sec-lbl">03 — Sport &amp; Abenteuer</span>
+      <h2 class="sec-h2"><span class="stl">Sport &amp;</span><span class="stl l2">Abenteuer</span></h2>
+      <div class="sec-badge"><span class="sec-badge-dot"></span>14 Aufnahmen</div>
+    </div>
+    <p class="sec-desc fi">Grenzen sprengen, Gipfel bezwingen — der menschliche Wille im Moment der grössten Anstrengung.</p>
+  </div>
+
+  <div class="sp-col fi">
+    <div class="spc" tabindex="0" role="button" aria-label="Klettern Felswand vergrössern">
+      <img src="images/_A7_2649.jpg" alt="Kletterer an senkrechter Felswand mit Seil" loading="lazy" width="700" height="900" draggable="false">
+    </div>
+    <div class="spc" tabindex="0" role="button" aria-label="Snowboard vergrössern">
+      <img src="images/_A7_2033.jpg" alt="Snowboarder mit Brett auf dem Rücken steigt durch Tiefschnee auf" loading="lazy" width="700" height="900" draggable="false">
+    </div>
+    <div class="spc" tabindex="0" role="button" aria-label="Kletterausrüstung vergrössern">
+      <img src="images/_DSC1394.jpg" alt="Karabiner und Sicherungsgeräte am Klettergurt" loading="lazy" width="600" height="900" draggable="false">
+    </div>
+    <div class="spc" tabindex="0" role="button" aria-label="Wanderweg vergrössern">
+      <img src="images/_DSC3041.jpg" alt="Alpiner Wanderweg mit rotem Markierungsstein" loading="lazy" width="700" height="500" draggable="false">
+    </div>
+    <div class="spc" tabindex="0" role="button" aria-label="Bergabenteuer vergrössern">
+      <img src="images/_A7_2596.jpg" alt="Person schaut im Gegenlicht auf Berggipfel" loading="lazy" width="700" height="900" draggable="false">
+    </div>
+  </div>
+
+  <div class="sp-sub">
+    <div class="card fi" tabindex="0" role="button" aria-label="Kletterer mit Helm vergrössern">
+      <img src="images/_A7_2411.jpg" alt="Kletterer mit orangem Helm hält Seil vor Felswand" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Klettern · Sichern</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Kletterer Fels vergrössern">
+      <img src="images/_A7_2669.jpg" alt="Kletterer greift nach Felskante mit gelber Hose" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Freiklettern</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Hand am Fels vergrössern">
+      <img src="images/_DSC1548.jpg" alt="Klettererhand mit Magnesium greift in Felsspalte" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Grip · Detail</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Wanderer Schnee vergrössern">
+      <img src="images/_DSC3132.jpg" alt="Zwei Wanderer steigen einen verschneiten Hang hinauf" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Schneewanderung</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Kletterer Felswand vergrössern">
+      <img src="images/_DSC1578.jpg" alt="Kletterer in gelber Jacke greift nach oben an steiler Felswand" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Klettern · North Face</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Hand an Fels vergrössern">
+      <img src="images/_DSC1556.jpg" alt="Fingerspitzen greifen in feinste Felsspalte" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Fingertechnik · Crimp</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Magnesium Chalk vergrössern">
+      <img src="images/_DSC1769.jpg" alt="Kletterer greift in Magnesiumbeutel, weisser Staub in der Luft" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Chalk · Detail</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Sichern mit Seil vergrössern">
+      <img src="images/_DSC1748.jpg" alt="Person sichert mit Seil an Felswand" loading="lazy" width="600" height="400" draggable="false">
+      <div class="cap">Seilsicherung</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
+<!-- 04 MOTORSPORT -->
+<section id="motorsport" class="section" data-bg="#0f0000" data-accent="#ef4444" aria-label="Motorsport">
+  <div class="ghost" aria-hidden="true">04</div>
+  <div class="sec-hdr">
+    <div>
+      <span class="sec-lbl">04 — Motorsport</span>
+      <h2 class="sec-h2"><span class="stl">Motor-</span><span class="stl l2">sport</span></h2>
+      <div class="sec-badge"><span class="sec-badge-dot"></span>7 Aufnahmen</div>
+    </div>
+    <p class="sec-desc fi">Panning-Technik trifft auf Präzision — Geschwindigkeit sichtbar gemacht in einem einzigen Bild.</p>
+  </div>
+
+  <div class="ms-strip fi" aria-label="Motorsport Bilder">
+    <div class="ms-inner" id="msinner">
+      <div class="card" tabindex="0" role="button" aria-label="Ferrari F1 vergrössern">
+        <img src="images/_DSC5654.jpg" alt="Ferrari Formel-1-Auto in voller Fahrt mit Panning-Technik" loading="lazy" width="1200" height="600" draggable="false">
+        <div class="cap">Ferrari F1 · Austria GP</div>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="Red Bull F1 vergrössern">
+        <img src="images/_DSC5710.jpg" alt="Red Bull Racing Formel-1-Auto mit Panning-Unschärfe" loading="lazy" width="1200" height="600" draggable="false">
+        <div class="cap">Red Bull · F1</div>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="Porsche GT3 vergrössern">
+        <img src="images/_DSC6074.jpg" alt="Blauer Porsche 911 GT3 Cup in der Kurve mit Panning" loading="lazy" width="1200" height="600" draggable="false">
+        <div class="cap">Porsche 911 GT3</div>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="BMW M3 Rennsport vergrössern">
+        <img src="images/_DSC5289.jpg" alt="Oranger BMW M3 Rennsportwagen mit Jägermeister-Sponsoring" loading="lazy" width="900" height="600" draggable="false">
+        <div class="cap">BMW M3 · Rennsport</div>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="VW Golf Rennsport vergrössern">
+        <img src="images/_DSC4957.jpg" alt="Weisser VW Golf Rennsportwagen im Fahrerlager" loading="lazy" width="900" height="600" draggable="false">
+        <div class="cap">VW Golf · Hillclimb</div>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="VW Golf Wolf-Power vergrössern">
+        <img src="images/_DSC4958.jpg" alt="Weisser VW Golf Rennwagen mit Wolf-Power Livery im Zelt" loading="lazy" width="900" height="600" draggable="false">
+        <div class="cap">Wolf-Power · Pits</div>
+      </div>
+      <div class="card" tabindex="0" role="button" aria-label="Ferrari F1 Panning vergrössern">
+        <img src="images/_DSC5741.jpg" alt="Ferrari Formel-1-Auto mit Bewegungsunschärfe auf der Rennstrecke" loading="lazy" width="1200" height="600" draggable="false">
+        <div class="cap">Ferrari F1 · Speed</div>
+      </div>
+      <!-- loop duplicates (aria-hidden so they don't appear in lightbox) -->
+      <div class="card" aria-hidden="true"><img src="images/_DSC5654.jpg" alt="" loading="lazy" width="1200" height="600" draggable="false"></div>
+      <div class="card" aria-hidden="true"><img src="images/_DSC5710.jpg" alt="" loading="lazy" width="1200" height="600" draggable="false"></div>
+      <div class="card" aria-hidden="true"><img src="images/_DSC6074.jpg" alt="" loading="lazy" width="1200" height="600" draggable="false"></div>
+      <div class="card" aria-hidden="true"><img src="images/_DSC5289.jpg" alt="" loading="lazy" width="900" height="600" draggable="false"></div>
+      <div class="card" aria-hidden="true"><img src="images/_DSC4957.jpg" alt="" loading="lazy" width="900" height="600" draggable="false"></div>
+      <div class="card" aria-hidden="true"><img src="images/_DSC4958.jpg" alt="" loading="lazy" width="900" height="600" draggable="false"></div>
+      <div class="card" aria-hidden="true"><img src="images/_DSC5741.jpg" alt="" loading="lazy" width="1200" height="600" draggable="false"></div>
+    </div>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
+<!-- 05 WILDLIFE -->
+<section id="wildlife" class="section" data-bg="#090700" data-accent="#d97706" aria-label="Wildlife Tierfotografie">
+  <div class="ghost" aria-hidden="true">05</div>
+  <div class="sec-hdr">
+    <div>
+      <span class="sec-lbl">05 — Wildlife</span>
+      <h2 class="sec-h2"><span class="stl">Wild-</span><span class="stl l2">life</span></h2>
+      <div class="sec-badge"><span class="sec-badge-dot"></span>3 Aufnahmen</div>
+    </div>
+    <p class="sec-desc fi">Stille Begegnungen in freier Wildbahn — Momente, die nur einem geduldigen Beobachter gehören.</p>
+  </div>
+
+  <div class="wl-grid">
+    <div class="card fi" tabindex="0" role="button" aria-label="Reh vergrössern">
+      <img src="images/_A7_1033.jpg" alt="Junges Reh blickt direkt in die Kamera, im Hintergrund neblige Herbstlandschaft" loading="lazy" width="800" height="1200" draggable="false">
+      <div class="cap">Rehkitz · Herbst</div>
+    </div>
+    <div class="wl-text fi">
+      <div class="wl-badge">Wildtiere</div>
+      <p class="wl-q">„In der Stille der Natur liegt eine Wahrheit, die keine Sprache der Welt ausdrücken kann."</p>
+      <div class="wl-rule"></div>
+      <p class="wl-body">Wildlife-Fotografie verlangt Geduld, Respekt und ein tiefes Verständnis für die Natur. Jedes Bild entsteht aus stundenlangem, lautlosem Warten.</p>
+      <p class="wl-body">Wenn das Licht stimmt und der entscheidende Moment kommt — dann drückt man ab. Dieser eine Augenblick rechtfertigt alles.</p>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 2fr;gap:5px;margin-top:5px">
+    <div class="card fi" tabindex="0" role="button" aria-label="Hirsch Portrait vergrössern" style="height:340px">
+      <img src="images/_A7_1061.jpg" alt="Hirsch mit imposantem Geweih schaut direkt in die Kamera, Bokeh Hintergrund" loading="lazy" width="700" height="1000" draggable="false">
+      <div class="cap">Hirsch · Portrait</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Nebelbaum mit Vogel vergrössern" style="height:340px">
+      <img src="images/_DSC0091.jpg" alt="Einsamer Baum mit Vogel im dichten Nebel, Madeira" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Nebelbaum · Madeira</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
+<!-- 06 ARCHITEKTUR -->
+<section id="architektur" class="section" data-bg="#0c0b00" data-accent="#eab308" aria-label="Architektur und Reise">
+  <div class="ghost" aria-hidden="true">06</div>
+  <div class="sec-hdr">
+    <div>
+      <span class="sec-lbl">06 — Architektur &amp; Reise</span>
+      <h2 class="sec-h2"><span class="stl">Archi-</span><span class="stl l2">tektur</span></h2>
+      <div class="sec-badge"><span class="sec-badge-dot"></span>5 Aufnahmen</div>
+    </div>
+    <p class="sec-desc fi">Orte, die Geschichten erzählen — Kulturen, Gärten und Strassen neu entdeckt durch mein Objektiv.</p>
+  </div>
+
+  <div class="ar-grid">
+    <div class="card fi" tabindex="0" role="button" aria-label="Monte Palace Garten vergrössern">
+      <img src="images/_DSC9756.jpg" alt="Rote Holzbrücke im japanischen Garten des Monte Palace, Madeira" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Monte Palace · Madeira</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Traditionelles Haus Madeira vergrössern">
+      <img src="images/_DSC0467.jpg" alt="Traditionelles dreieckiges Strohdachhaus mit roter Tür in Santana, Madeira" loading="lazy" width="700" height="900" draggable="false">
+      <div class="cap">Santana · Madeira</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Wanderer Sonnenuntergang vergrössern">
+      <img src="images/_DSC0733.jpg" alt="Wanderer als Silhouette vor Sonnenuntergang über Wolkenmeer, Madeira" loading="lazy" width="900" height="600" draggable="false">
+      <div class="cap">Pico Ruivo · Madeira</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Gasse Lugano vergrössern">
+      <img src="images/_A7_3338.jpg" alt="Schmale Altstadtgasse in Lugano mit gelben Fassaden und Balkonen" loading="lazy" width="700" height="900" draggable="false">
+      <div class="cap">Altstadt · Lugano</div>
+    </div>
+    <div class="card fi" tabindex="0" role="button" aria-label="Japanischer Teich vergrössern">
+      <img src="images/_DSC9870.jpg" alt="Japanischer Teich mit roter Brücke und Koi-Karpfen im Monte Palace, Madeira" loading="lazy" width="1200" height="600" draggable="false">
+      <div class="cap">Koi-Teich · Monte Palace</div>
+    </div>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
+<!-- KONTAKT -->
+<section id="contact" class="section" data-bg="#0a0a0a" aria-label="Kontakt">
+  <div class="ct-wrap">
+    <div class="fi">
+      <span class="ct-eye">07 — Kontakt</span>
+      <h2 class="ct-h2">Lass uns<br>zusammen-<br>arbeiten</h2>
+      <p class="ct-p">Hast du ein Projekt? Ob Konzert, Portrait, Landschaft oder Motorsport — ich antworte innerhalb von 48 Stunden.</p>
+      <p class="ct-p"><a href="mailto:livioraschle@gmail.com" class="ct-mail" aria-label="E-Mail senden">livioraschle@gmail.com</a></p>
+      <nav class="ct-soc" aria-label="Social Media">
+        <a href="#" class="ct-s" aria-label="Instagram">Instagram</a>
+        <a href="#" class="ct-s" aria-label="Behance">Behance</a>
+        <a href="#" class="ct-s" aria-label="LinkedIn">LinkedIn</a>
+      </nav>
+    </div>
+    <form id="cform" class="fi" novalidate aria-label="Kontaktformular">
+      <div class="fg">
+        <label for="fn">Name</label>
+        <input id="fn" name="name" type="text" autocomplete="name" placeholder="…Dein Name" required aria-required="true">
+      </div>
+      <div class="fg">
+        <label for="fe">E-Mail</label>
+        <input id="fe" name="email" type="email" autocomplete="email" spellcheck="false" placeholder="…deine@email.com" required aria-required="true">
+      </div>
+      <div class="fg">
+        <label for="fc">Kategorie</label>
+        <select id="fc" name="category">
+          <option value="">— Auswählen</option>
+          <option>Konzert / Event</option>
+          <option>Landschaft / Natur</option>
+          <option>Sport / Abenteuer</option>
+          <option>Motorsport</option>
+          <option>Portrait / People</option>
+          <option>Sonstiges</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label for="fm">Nachricht</label>
+        <textarea id="fm" name="message" placeholder="…Erzähl mir von deinem Projekt" aria-label="Nachricht"></textarea>
+      </div>
+      <div id="ferr" role="alert" aria-live="polite"></div>
+      <button type="submit" class="sbtn" id="sbtn" aria-label="Formular absenden">Anfrage senden</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span translate="no">© 2026 Livio Raschle Photography</span>
+  <div style="display:flex;gap:2rem;align-items:center">
+    <span style="opacity:.35">Schweiz</span>
+    <a href="mailto:livioraschle@gmail.com" style="color:var(--muted);text-decoration:none;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;transition:color .3s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">livioraschle@gmail.com</a>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
