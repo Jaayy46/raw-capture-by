@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-html:
+    name: HTML Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install html5validator
+        run: pip install html5validator
+
+      - name: Validate HTML
+        run: |
+          html5validator \
+            --root projects/ \
+            --match "*.html" \
+            --log INFO \
+            --ignore-re "Trailing slash on void elements"
+
+  check-links:
+    name: Link Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links (lychee)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --exclude-loopback
+            --exclude "^mailto:"
+            --exclude "fonts.googleapis.com"
+            --exclude "fonts.gstatic.com"
+            --exclude "raw-capture-by.com"
+            --timeout 20
+            --retry-wait-time 5
+            --max-retries 3
+            'projects/**/*.html'
+          fail: true

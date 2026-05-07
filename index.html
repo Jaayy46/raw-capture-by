@@ -74,6 +74,7 @@
 <!-- DOT NAV -->
 <nav id="dotnav" aria-label="Sektionsnavigation">
   <a href="#hero"        class="dn-item act" data-target="hero"        aria-label="Intro"><div class="dn-dot"></div><span class="dn-lbl">Intro</span></a>
+  <a href="#overview"    class="dn-item"     data-target="overview"    aria-label="Übersicht"><div class="dn-dot"></div><span class="dn-lbl">Übersicht</span></a>
   <a href="#landschaft"  class="dn-item"     data-target="landschaft"  aria-label="Landschaft"><div class="dn-dot"></div><span class="dn-lbl">Landschaft</span></a>
   <a href="#konzerte"    class="dn-item"     data-target="konzerte"    aria-label="Konzerte"><div class="dn-dot"></div><span class="dn-lbl">Konzerte</span></a>
   <a href="#sport"       class="dn-item"     data-target="sport"       aria-label="Sport"><div class="dn-dot"></div><span class="dn-lbl">Sport</span></a>
@@ -151,6 +152,66 @@
 
 <div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
 
+<!-- OVERVIEW -->
+<section id="overview" class="ov-sec" aria-label="Portfolio Übersicht">
+  <div class="ov-hdr">
+    <span class="sec-lbl">Portfolio</span>
+    <h2 class="ov-title">Kategorien</h2>
+  </div>
+  <div class="ov-grid">
+    <a href="#landschaft" class="ov-tile fi" aria-label="Landschaft — 16 Aufnahmen">
+      <picture><source type="image/webp" srcset="images/A7_06806.webp"><img src="images/A7_06806.jpg" alt="Landschaft" loading="lazy" draggable="false"></picture>
+      <div class="ov-meta">
+        <span class="ov-num">01</span>
+        <span class="ov-name">Landschaft</span>
+        <span class="ov-count">16 Aufnahmen</span>
+      </div>
+    </a>
+    <a href="#konzerte" class="ov-tile fi" aria-label="Konzerte — 8 Aufnahmen">
+      <picture><source type="image/webp" srcset="images/A7_00019.webp"><img src="images/A7_00019.jpg" alt="Konzerte" loading="lazy" draggable="false"></picture>
+      <div class="ov-meta">
+        <span class="ov-num">02</span>
+        <span class="ov-name">Konzerte</span>
+        <span class="ov-count">8 Aufnahmen</span>
+      </div>
+    </a>
+    <a href="#sport" class="ov-tile fi" aria-label="Sport — 9 Aufnahmen">
+      <picture><source type="image/webp" srcset="images/_A7_2596.webp"><img src="images/_A7_2596.jpg" alt="Sport" loading="lazy" draggable="false"></picture>
+      <div class="ov-meta">
+        <span class="ov-num">03</span>
+        <span class="ov-name">Sport</span>
+        <span class="ov-count">9 Aufnahmen</span>
+      </div>
+    </a>
+    <a href="#motorsport" class="ov-tile fi" aria-label="Motorsport — 7 Aufnahmen">
+      <picture><source type="image/webp" srcset="images/_DSC5654.webp"><img src="images/_DSC5654.jpg" alt="Motorsport" loading="lazy" draggable="false"></picture>
+      <div class="ov-meta">
+        <span class="ov-num">04</span>
+        <span class="ov-name">Motorsport</span>
+        <span class="ov-count">7 Aufnahmen</span>
+      </div>
+    </a>
+    <a href="#wildlife" class="ov-tile fi" aria-label="Wildlife — 3 Aufnahmen">
+      <picture><source type="image/webp" srcset="images/_A7_1033.webp"><img src="images/_A7_1033.jpg" alt="Wildlife" loading="lazy" draggable="false"></picture>
+      <div class="ov-meta">
+        <span class="ov-num">05</span>
+        <span class="ov-name">Wildlife</span>
+        <span class="ov-count">3 Aufnahmen</span>
+      </div>
+    </a>
+    <a href="#architektur" class="ov-tile fi" aria-label="Architektur — 4 Aufnahmen">
+      <picture><source type="image/webp" srcset="images/_DSC0733.webp"><img src="images/_DSC0733.jpg" alt="Architektur" loading="lazy" draggable="false"></picture>
+      <div class="ov-meta">
+        <span class="ov-num">06</span>
+        <span class="ov-name">Architektur</span>
+        <span class="ov-count">4 Aufnahmen</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
+
 <!-- 01 LANDSCHAFT -->
 <section id="landschaft" class="section" data-bg="#030f06" data-accent="#4ade80" aria-label="Landschaft">
   <div class="ghost" aria-hidden="true">01</div>
@@ -178,6 +239,7 @@
     </div>
   </div>
 
+  <div class="sec-extra" id="extra-landschaft">
   <div class="ls-r1">
     <div class="card fi" tabindex="0" role="button" aria-label="Schneetannen vergrössern">
       <picture><source type="image/webp" srcset="images/_A7_2126.webp"><img src="images/_A7_2126.jpg" alt="Verschneite Tannen unter blauem Winterhimmel" loading="lazy" width="600" height="400" draggable="false"></picture>
@@ -238,6 +300,11 @@
       <div class="cap">Klippen · Atlantik</div>
     </div>
   </div>
+  </div><!-- /sec-extra -->
+  <button class="btn-expand" data-extra="extra-landschaft" data-total="16" aria-expanded="false">
+    <span class="btn-expand-txt">Alle 16 Bilder ansehen</span>
+    <span class="btn-expand-ico" aria-hidden="true">↓</span>
+  </button>
 </section>
 
 <div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
@@ -269,6 +336,7 @@
     </div>
   </div>
 
+  <div class="sec-extra" id="extra-konzerte">
   <div class="kz-sub">
     <div class="card fi" tabindex="0" role="button" aria-label="Konzertlichter vergrössern">
       <picture><source type="image/webp" srcset="images/A7_08088.webp"><img src="images/A7_08088.jpg" alt="Verwischte Lichtstrahlen und Bewegungsunschärfe auf der Bühne" loading="lazy" width="700" height="500" draggable="false"></picture>
@@ -291,6 +359,11 @@
       <div class="cap">Live Rap · Crowd</div>
     </div>
   </div>
+  </div><!-- /sec-extra -->
+  <button class="btn-expand" data-extra="extra-konzerte" data-total="8" aria-expanded="false">
+    <span class="btn-expand-txt">Alle 8 Bilder ansehen</span>
+    <span class="btn-expand-ico" aria-hidden="true">↓</span>
+  </button>
 </section>
 
 <div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>
@@ -325,6 +398,7 @@
     </div>
   </div>
 
+  <div class="sec-extra" id="extra-sport">
   <div class="sp-sub">
     <div class="card fi" tabindex="0" role="button" aria-label="Kletterer mit Helm vergrössern">
       <picture><source type="image/webp" srcset="images/_A7_2411.webp"><img src="images/_A7_2411.jpg" alt="Kletterer mit orangem Helm hält Seil vor Felswand" loading="lazy" width="600" height="400" draggable="false"></picture>
@@ -359,6 +433,11 @@
       <div class="cap">Seilsicherung</div>
     </div>
   </div>
+  </div><!-- /sec-extra -->
+  <button class="btn-expand" data-extra="extra-sport" data-total="9" aria-expanded="false">
+    <span class="btn-expand-txt">Alle 9 Bilder ansehen</span>
+    <span class="btn-expand-ico" aria-hidden="true">↓</span>
+  </button>
 </section>
 
 <div class="div" aria-hidden="true"><div class="div-l"></div><div class="div-d"></div><div class="div-l"></div></div>

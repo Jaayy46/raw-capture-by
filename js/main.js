@@ -218,6 +218,28 @@ const dnObs = new IntersectionObserver(entries => {
 }, { threshold: .35 });
 dnSections.forEach(id => { const el = document.getElementById(id); if (el) dnObs.observe(el); });
 
+/* SECTION EXPAND / COLLAPSE */
+document.querySelectorAll('.btn-expand').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const extraId = btn.dataset.extra;
+    const total   = btn.dataset.total;
+    const extra   = document.getElementById(extraId);
+    const isOpen  = extra.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.setAttribute('aria-expanded', isOpen);
+    const txt = btn.querySelector('.btn-expand-txt');
+    txt.textContent = isOpen
+      ? 'Weniger anzeigen'
+      : `Alle ${total} Bilder ansehen`;
+    // trigger lazy reveal on newly visible images
+    if (isOpen) {
+      extra.querySelectorAll('img:not(.loaded)').forEach(img => {
+        if (img.complete && img.naturalWidth > 0) img.classList.add('loaded');
+      });
+    }
+  });
+});
+
 /* CONTACT FORM */
 const cform = document.getElementById('cform'), ferr = document.getElementById('ferr'), sbtn = document.getElementById('sbtn');
 cform.addEventListener('submit', e => {
