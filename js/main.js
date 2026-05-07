@@ -147,7 +147,10 @@ document.querySelectorAll('.sec-desc, .hero-eye').forEach(el => {
 document.querySelectorAll('img:not(#lbimg)').forEach(img => {
   const reveal = () => img.classList.add('loaded');
   if (img.complete && img.naturalWidth > 0) reveal();
-  else img.addEventListener('load', reveal);
+  else {
+    img.addEventListener('load', reveal);
+    img.addEventListener('error', reveal); // show alt text even on load failure
+  }
 });
 
 /* IMAGE PROTECTION */
@@ -172,7 +175,7 @@ let imgs = [], lidx = 0;
 document.querySelectorAll('.card:not([aria-hidden]) img, .spc:not([aria-hidden]) img').forEach(img => {
   if (!img.closest('[aria-hidden="true"]')) {
     const idx = imgs.length;
-    imgs.push({ src: img.src, alt: img.alt });
+    imgs.push({ src: img.currentSrc || img.src, alt: img.alt });
     const card = img.closest('.card,.spc');
     if (card) {
       card.addEventListener('click', () => openLB(idx));
