@@ -628,6 +628,9 @@
   </div>
 </footer>
 
+<!-- Lenis smooth scroll -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
 <!-- Framer Motion (vanilla/framework-agnostic, CDN) -->
 <script type="module">
 import { animate, inView, scroll, spring } from 'https://cdn.jsdelivr.net/npm/motion@12/+esm';
@@ -651,7 +654,7 @@ document.querySelectorAll('.ghost').forEach(el => {
   const section = el.closest('.section');
   if (!section) return;
   scroll(
-    animate(el, { y: ['-10%', '10%'], opacity: [0.025, 0.012] }),
+    animate(el, { y: ['-8%', '18%'], opacity: [0.03, 0.008], scale: [1.05, 0.94] }),
     { target: section, offset: ['start end', 'end start'] }
   );
 });
@@ -659,7 +662,7 @@ document.querySelectorAll('.ghost').forEach(el => {
 /* ── FRAMER MOTION: Scroll-driven card scale ── */
 document.querySelectorAll('.card:not([aria-hidden])').forEach(card => {
   scroll(
-    animate(card, { scale: [0.96, 1] }),
+    animate(card, { scale: [0.95, 1] }),
     { target: card, offset: ['start end', 'center center'] }
   );
 });
@@ -668,10 +671,39 @@ document.querySelectorAll('.card:not([aria-hidden])').forEach(card => {
 const heroH1 = document.querySelector('.hero-h1');
 if (heroH1) {
   scroll(
-    animate(heroH1, { letterSpacing: ['0.06em', '0.18em'], opacity: [1, 0] }),
+    animate(heroH1, { letterSpacing: ['0.06em', '0.22em'], opacity: [1, 0] }),
     { target: document.getElementById('hero'), offset: ['center start', 'end start'] }
   );
 }
+
+/* ── FRAMER MOTION: Overview tiles stagger reveal ── */
+inView('.ov-grid', ({ target }) => {
+  const tiles = target.querySelectorAll('.ov-tile');
+  tiles.forEach((tile, i) => {
+    animate(tile,
+      { opacity: [0, 1], y: [50, 0], scale: [0.91, 1] },
+      { duration: 0.85, delay: i * 0.09, easing: [0.16, 1, 0.3, 1] }
+    );
+  });
+}, { amount: 0.05 });
+
+/* ── FRAMER MOTION: Full-width feature parallax ── */
+document.querySelectorAll('.fw-feat img').forEach(img => {
+  scroll(
+    animate(img, { y: ['-8%', '8%'] }),
+    { target: img.closest('.fw-feat'), offset: ['start end', 'end start'] }
+  );
+});
+
+/* ── FRAMER MOTION: Section heading depth on scroll ── */
+document.querySelectorAll('.sec-h2').forEach(h2 => {
+  const section = h2.closest('.section');
+  if (!section) return;
+  scroll(
+    animate(h2, { letterSpacing: ['0.04em', '0.09em'], opacity: [1, 0.2] }),
+    { target: section, offset: ['center start', 'end start'] }
+  );
+});
 
 /* ── FRAMER MOTION: Contact section entrance ── */
 inView('#contact .ct-h2', ({ target }) => {

@@ -232,6 +232,28 @@ document.querySelectorAll('.btn-expand').forEach(btn => {
   });
 });
 
+/* LENIS SMOOTH SCROLL */
+if (typeof Lenis !== 'undefined') {
+  const lenis = new Lenis({
+    lerp: 0.075,
+    smoothWheel: true,
+    wheelMultiplier: 0.85,
+    touchMultiplier: 1.2,
+  });
+  (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+  // Anchor nav — let Lenis handle smooth jump
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      const target = id === '#' ? document.body : document.querySelector(id);
+      if (target) {
+        e.preventDefault();
+        lenis.scrollTo(target, { duration: 1.4, easing: t => t < .5 ? 2*t*t : -1+(4-2*t)*t });
+      }
+    });
+  });
+}
+
 /* CONTACT FORM */
 const cform = document.getElementById('cform'), ferr = document.getElementById('ferr'), sbtn = document.getElementById('sbtn');
 cform.addEventListener('submit', e => {
