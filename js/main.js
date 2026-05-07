@@ -143,39 +143,7 @@ document.querySelectorAll('.sec-desc, .hero-eye').forEach(el => {
   ).join(' ');
 });
 
-/* IMAGE REVEAL — IntersectionObserver primary, load event fallback */
-(function() {
-  const reveal = img => img.classList.add('loaded');
-
-  // Always reveal already-loaded images immediately
-  document.querySelectorAll('img:not(#lbimg)').forEach(img => {
-    if (img.complete && img.naturalWidth > 0) { reveal(img); return; }
-    img.addEventListener('load',  () => reveal(img));
-    img.addEventListener('error', () => reveal(img));
-  });
-
-  // IntersectionObserver: reveal when element enters viewport (catches
-  // images in overflow:hidden / absolute-positioned containers where
-  // the load event alone may not fire reliably with loading="lazy")
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const img = e.target;
-          // Force src reload if browser stalled on lazy img
-          if (!img.complete || img.naturalWidth === 0) {
-            const s = img.currentSrc || img.src;
-            if (s) { img.src = ''; img.src = s; }
-          }
-          reveal(img);
-          io.unobserve(img);
-        }
-      });
-    }, { rootMargin: '100px 0px' });
-
-    document.querySelectorAll('img:not(#lbimg):not(.loaded)').forEach(img => io.observe(img));
-  }
-})();
+/* (image reveal removed — images visible by default, card scroll-timeline handles fade) */
 
 /* IMAGE PROTECTION */
 document.addEventListener('contextmenu', e => {

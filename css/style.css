@@ -330,11 +330,9 @@ nav{
 .card img{
   width:100%;height:100%;object-fit:cover;display:block;
   filter:brightness(.78);
-  transition:transform 1s var(--ease),filter .6s,opacity .7s;
+  transition:transform 1s var(--ease),filter .6s;
   will-change:transform;
-  opacity:0;
 }
-.card img.loaded{opacity:1}
 .card:hover img{transform:scale(1.05);filter:brightness(1)}
 .card:hover{box-shadow:0 20px 60px rgba(0,0,0,.65)}
 .card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -349,8 +347,7 @@ nav{
 
 /* ── SPORT COLLAGE ── */
 .spc{position:absolute;overflow:hidden;cursor:pointer}
-.spc img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.75);transition:transform 1s var(--ease),filter .5s,opacity .7s;will-change:transform;opacity:0}
-.spc img.loaded{opacity:1}
+.spc img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.75);transition:transform 1s var(--ease),filter .5s;will-change:transform;}
 .spc:hover{z-index:10}
 .spc:hover img{transform:scale(1.07);filter:brightness(1)}
 .spc:focus-visible{outline:2px solid var(--gold);outline-offset:2px;z-index:10}
@@ -395,9 +392,7 @@ nav{
   width:100%;height:100%;object-fit:cover;display:block;
   filter:brightness(.45) saturate(.85);
   transition:transform .7s var(--ease),filter .5s;
-  opacity:0;
 }
-.ov-tile img.loaded{opacity:1}
 .ov-tile:hover img{transform:scale(1.06);filter:brightness(.65) saturate(1)}
 .ov-tile::after{
   content:'';position:absolute;inset:0;
@@ -583,7 +578,7 @@ footer{
 /* ── REDUCED MOTION ── */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  .stl{transform:none}.fi{opacity:1;transform:none}.card img{opacity:1}.spc img{opacity:1}
+  .stl{transform:none}.fi{opacity:1;transform:none}
   #loader{display:none}
 }
 
