@@ -130,9 +130,22 @@ body.chover #cdot{width:4px;height:4px}
 body.chover #cring{width:72px;height:72px;border-color:rgba(200,150,90,.65)}
 body.clink  #cring{width:56px;height:56px}
 
-/* ── SCROLL PROGRESS ── */
-#prog{position:fixed;left:1.6rem;top:50%;transform:translateY(-50%);width:1px;height:90px;background:var(--border);z-index:500}
-#pfill{position:absolute;top:0;left:0;width:100%;height:0%;background:var(--gold);transition:height .08s linear}
+/* ── SCROLL PROGRESS (SVG border) ── */
+#prog-svg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:500;
+}
+#prog-rect{
+  fill:none;stroke:var(--gold);stroke-width:1.5;
+  opacity:.5;
+  stroke-dasharray:0;stroke-dashoffset:0;
+  transition:stroke-dashoffset .08s linear;
+}
+
+/* ── CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{border-bottom:100vh solid var(--gold);opacity:.5}
 
 /* ── MAIN NAV ── */
 nav{
@@ -530,7 +543,7 @@ footer{
   .ct-wrap{grid-template-columns:1fr;gap:3rem}
   footer{flex-direction:column;gap:1rem;text-align:center}
   .ft-right{justify-content:center}
-  #prog{display:none}
+  #prog-svg{display:none}
   #dotnav{display:none}
   .hero-stats{gap:1.5rem}
   #moverlay{padding:1.5rem}

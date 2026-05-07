@@ -30,13 +30,27 @@ document.querySelectorAll('a,button').forEach(el => {
 
 /* HERO IMAGE REF (parallax handled by scroll-scrubbed block below) */
 const himg = document.getElementById('hero-img');
-window.addEventListener('scroll', updateProg, { passive: true });
 
-/* PROGRESS */
-const pf = document.getElementById('pfill');
-function updateProg() {
-  pf.style.height = (scrollY / (document.documentElement.scrollHeight - innerHeight) * 100) + '%';
+/* PROGRESS — SVG viewport border (ported from mohitvirli.github.io ProgressLoader) */
+const progRect = document.getElementById('prog-rect');
+let _perim = 0;
+function initProg() {
+  const pad = 10, w = innerWidth - pad * 2, h = innerHeight - pad * 2;
+  progRect.setAttribute('x', pad);
+  progRect.setAttribute('y', pad);
+  progRect.setAttribute('width', w);
+  progRect.setAttribute('height', h);
+  _perim = 2 * (w + h);
+  progRect.style.strokeDasharray = _perim;
+  updateProg();
 }
+function updateProg() {
+  const ratio = scrollY / (document.documentElement.scrollHeight - innerHeight);
+  progRect.style.strokeDashoffset = _perim - _perim * Math.min(ratio, 1);
+}
+initProg();
+window.addEventListener('resize', initProg, { passive: true });
+window.addEventListener('scroll', updateProg, { passive: true });
 
 /* MENU */
 const mbtn = document.getElementById('mbtn'), mov = document.getElementById('moverlay');
