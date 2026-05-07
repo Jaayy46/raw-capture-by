@@ -12,6 +12,9 @@
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+picture{display:block;width:100%;height:100%}
+/* Hero picture is absolutely positioned — override sizing */
+#hero>picture{position:absolute;top:-10%;left:0;width:100%;height:120%}
 html{scroll-behavior:smooth}
 body{
   background:var(--bg);color:var(--text);
@@ -199,7 +202,7 @@ nav{
 
 /* ── HERO ── */
 #hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:flex-end;overflow:hidden}
-.hero-img{position:absolute;top:-10%;left:0;width:100%;height:120%;object-fit:cover;filter:brightness(.38) saturate(1.1);will-change:transform;pointer-events:none}
+.hero-img{width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(1.1);will-change:transform;pointer-events:none}
 .hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.95) 0%,rgba(10,10,10,.1) 50%,transparent 100%)}
 .hero-content{
   position:relative;z-index:2;padding:0 3.5rem 5rem;width:100%;
