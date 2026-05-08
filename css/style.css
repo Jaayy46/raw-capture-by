@@ -95,7 +95,7 @@ img{
 
 /* ── GRAIN OVERLAY ── */
 body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9980;
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:8999;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
@@ -159,14 +159,14 @@ body.clink  #cring{width:56px;height:56px}
 ::-webkit-scrollbar-thumb{border-bottom:100vh solid var(--gold);opacity:.5}
 
 /* ── MAIN NAV ── */
-nav{
+nav[aria-label="Hauptnavigation"]{
   position:fixed;top:0;left:0;right:0;z-index:800;
   display:flex;justify-content:space-between;align-items:center;
   padding:1.6rem 3.5rem;
   background:linear-gradient(to bottom,rgba(10,10,10,.88) 0%,rgba(10,10,10,0) 100%);
   transition:background .4s var(--ease),padding .4s var(--ease);
 }
-nav.scrolled{
+nav[aria-label="Hauptnavigation"].scrolled{
   background:rgba(10,10,10,.94);
   padding:1.1rem 3.5rem;
   backdrop-filter:blur(12px);
@@ -337,8 +337,9 @@ nav.scrolled{
 /* ── DOT NAV ── */
 #dotnav{
   position:fixed;right:1.8rem;top:50%;transform:translateY(-50%);
+  left:auto;padding:0;background:none;
   display:flex;flex-direction:column;gap:.85rem;z-index:500;
-  align-items:flex-end;
+  align-items:flex-end;justify-content:flex-start;
 }
 .dn-item{
   position:relative;display:flex;align-items:center;
@@ -546,7 +547,7 @@ nav.scrolled{
 .ls-r1 .card{height:215px}
 .ls-r2{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
 .ls-r2 .card{height:215px}
-.ls-r3{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.ls-r3{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:4px}
 .ls-r3 .card{height:215px}
 
 /* ══ 02 KONZERTE ══ */
@@ -554,7 +555,7 @@ nav.scrolled{
 .kz-stage .card:nth-child(1){height:460px}
 .kz-stage .card:nth-child(2){height:640px}
 .kz-stage .card:nth-child(3){height:460px}
-.kz-sub{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.kz-sub{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:4px}
 .kz-sub .card{height:255px}
 
 /* ══ 03 SPORT ══ */
@@ -684,9 +685,9 @@ footer{
 /* ── RESPONSIVE 1024px ── */
 @media(max-width:1024px){
   .ls-main{grid-template-columns:1fr;grid-template-rows:auto}.ls-main .card:nth-child(1){grid-row:auto;height:320px!important}
-  .ls-r1{grid-template-columns:repeat(3,1fr)}.ls-r2{grid-template-columns:repeat(2,1fr)}.ls-r3{grid-template-columns:repeat(2,1fr)}
+  .ls-r1{grid-template-columns:repeat(3,1fr)}.ls-r2{grid-template-columns:repeat(2,1fr)}.ls-r3{grid-template-columns:repeat(3,1fr)}
   .kz-stage{grid-template-columns:1fr}.kz-stage .card{height:300px!important}
-  .kz-sub{grid-template-columns:repeat(2,1fr)}
+  .kz-sub{grid-template-columns:repeat(3,1fr)}
   .wl-grid{grid-template-columns:1fr}.wl-grid .card{height:380px!important}
   .ar-grid{grid-template-columns:1fr;grid-template-rows:auto}.ar-grid .card{grid-column:auto!important;height:270px!important}
   .ms-strip::before,.ms-strip::after{width:60px}
@@ -702,7 +703,7 @@ footer{
 
 /* ── RESPONSIVE 768px ── */
 @media(max-width:768px){
-  nav{padding:1.4rem 1.5rem;mix-blend-mode:normal}
+  nav[aria-label="Hauptnavigation"]{padding:1.4rem 1.5rem;mix-blend-mode:normal}
   .section{padding:6rem 1.5rem}
   .ov-sec{padding:5rem 1.5rem 4rem}
   .ov-grid{grid-template-columns:repeat(2,1fr);gap:4px}
@@ -712,6 +713,7 @@ footer{
   .hero-right{display:none}
   .ls-r1,.ls-r2,.ls-r3{grid-template-columns:repeat(2,1fr)}
   .kz-sub{grid-template-columns:repeat(2,1fr)}
+  .kz-sub .card{height:220px}
   .sp-col{height:auto;display:flex;flex-direction:column;gap:4px}
   .spc{position:static;width:100%!important;height:240px!important;clip-path:none!important}
   .sp-sub{grid-template-columns:repeat(2,1fr)}
@@ -733,12 +735,13 @@ footer{
    ════════════════════════════════════════ */
 
 /* ── TOUCH TARGETS (Fitts' Law: min 44px × 44px) ── */
-/* Hamburger: visual 26px bars → hit area 48px */
-.mbtn{
-  min-width:48px;min-height:48px;
-  display:flex;align-items:center;justify-content:center;
-  /* Extend tap area beyond visual bars */
-  padding:12px;margin:-12px;
+/* Hamburger: visual 26px bars → hit area 48px (only when visible, ≤1024px) */
+@media(max-width:1024px){
+  .mbtn{
+    min-width:48px;min-height:48px;
+    align-items:center;justify-content:center;
+    padding:12px;margin:-12px;
+  }
 }
 
 /* Lightbox close/nav: already 3rem ≈ 48px, keep */
@@ -858,12 +861,12 @@ input,textarea,select{font-size:max(16px,1em)}
 
 /* ── SAFE AREA (iPhone notch/Dynamic Island) ── */
 @supports(padding:max(0px)){
-  nav{
+  nav[aria-label="Hauptnavigation"]{
     padding-left:max(3.5rem, env(safe-area-inset-left));
     padding-right:max(3.5rem, env(safe-area-inset-right));
   }
   @media(max-width:768px){
-    nav{
+    nav[aria-label="Hauptnavigation"]{
       padding-left:max(1.5rem, env(safe-area-inset-left));
       padding-right:max(1.5rem, env(safe-area-inset-right));
     }

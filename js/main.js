@@ -79,13 +79,12 @@ const bgObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       bgel.style.background = e.target.dataset.bg || '#0a0a0a';
-      pf.style.background = e.target.dataset.accent || '#c8965a';
     }
   });
 }, { threshold: .35 });
 document.querySelectorAll('[data-bg]').forEach(s => bgObs.observe(s));
 new IntersectionObserver(e => {
-  if (e[0].isIntersecting) { bgel.style.background = '#0a0a0a'; pf.style.background = '#c8965a'; }
+  if (e[0].isIntersecting) { bgel.style.background = '#0a0a0a'; }
 }, { threshold: .4 }).observe(document.getElementById('hero'));
 
 /* SECTION REVEAL */
