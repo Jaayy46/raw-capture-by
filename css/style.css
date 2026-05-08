@@ -726,3 +726,153 @@ footer{
   .minfo{display:none}
   .fw-feat{height:35vh}.fw-feat-label{left:1.5rem;bottom:2rem}
 }
+
+/* ════════════════════════════════════════
+   MOBILE DESIGN — skill: creative-design/mobile-design
+   Touch-first. Thumb zone. 44px targets. OLED-aware.
+   ════════════════════════════════════════ */
+
+/* ── TOUCH TARGETS (Fitts' Law: min 44px × 44px) ── */
+/* Hamburger: visual 26px bars → hit area 48px */
+.mbtn{
+  min-width:48px;min-height:48px;
+  display:flex;align-items:center;justify-content:center;
+  /* Extend tap area beyond visual bars */
+  padding:12px;margin:-12px;
+}
+
+/* Lightbox close/nav: already 3rem ≈ 48px, keep */
+@media(max-width:768px){
+  /* Close ×: larger hit area on mobile */
+  .lbx{width:3.5rem;height:3.5rem;top:1rem;right:1rem}
+  /* Prev/Next arrows: full-height side zones on mobile */
+  .lbnav{
+    width:4rem;height:60vh;
+    top:50%;transform:translateY(-50%);
+    border:none;
+    background:linear-gradient(to right, rgba(0,0,0,.25), transparent);
+  }
+  #lbprev{left:0;border-radius:0;background:linear-gradient(to right,rgba(0,0,0,.3),transparent)}
+  #lbnext{right:0;border-radius:0;background:linear-gradient(to left,rgba(0,0,0,.3),transparent)}
+}
+
+/* Dot-nav: dots too small (8px) — increase tap area */
+.dn-item{
+  /* Visual dot stays small, hit area: 44px */
+  padding:10px 6px;
+  /* Explicit min-height for touch */
+  min-height:44px;
+  display:flex;align-items:center;
+}
+
+/* Overview tiles: min-height 44px for tap */
+.ov-tile{min-height:120px}
+
+/* Contact form: input + button tap-friendly */
+@media(max-width:768px){
+  #cform input,#cform textarea,#cform select{
+    min-height:48px;
+    font-size:16px; /* Prevents iOS zoom on focus */
+    padding:.9rem 1rem;
+  }
+  .sbtn{
+    min-height:52px; /* Primary CTA in thumb zone → bigger */
+    width:100%;
+    font-size:.72rem;
+  }
+}
+
+/* ── THUMB ZONE — Primary CTAs at bottom ── */
+/* Mobile: hero CTA stays in bottom portion of hero (already is) */
+/* Contact button full-width → easy one-thumb submit */
+@media(max-width:768px){
+  .hero-cta{
+    padding:.9rem 2.2rem;
+    min-height:52px;
+    font-size:.68rem;
+  }
+  /* btn-more: full-width, thumb-friendly */
+  .btn-more{
+    width:100%;
+    min-height:48px;
+    justify-content:center;
+    margin-top:1.5rem;
+  }
+}
+
+/* ── NO HOVER → TAP (mobile has no hover states) ── */
+/* Replace hover-only card interactions with visible affordance */
+@media(hover:none) and (pointer:coarse){
+  /* Cards: show overlay on touch devices always slightly visible */
+  .card-over{opacity:.18} /* subtle persistent overlay hint */
+  /* Cursor: hide custom cursor on touch (no mouse) */
+  #cdot,#cring{display:none}
+  body{cursor:auto}
+  /* Remove cursor:none from interactive elements */
+  .mbtn,.lbx,.lbnav,.sbtn,.btn-more,.nav-cta-btn{cursor:pointer}
+}
+
+/* ── FONT SIZE — prevent iOS auto-zoom (min 16px on inputs) ── */
+input,textarea,select{font-size:max(16px,1em)}
+
+/* ── OLED DARK MODE — true black saves battery ── */
+/* Portfolio bg is #0a0a0a (near-black) — good.
+   Sections using #030f06, #0d0b18 etc also fine.
+   Ensure no unintentional bright backgrounds on mobile. */
+@media(max-width:768px) and (prefers-color-scheme:dark){
+  /* Loader: true black bg on OLED */
+  #loader{background:#000}
+  /* Nav scrolled: solid black (slightly more battery-efficient) */
+  nav.scrolled{background:rgba(0,0,0,.96)}
+}
+
+/* ── PERFORMANCE — reduced motion preference ── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  /* Keep scroll behaviour but skip JS animations */
+  html{scroll-behavior:auto}
+}
+
+/* ── MOBILE TYPOGRAPHY — readable at arm's length ── */
+@media(max-width:480px){
+  /* Body text: ensure min 15px for readability */
+  .sec-desc{font-size:.9rem;line-height:1.9}
+  /* Section number: slightly tighter */
+  .sec-hdr h2{font-size:clamp(1.6rem,8vw,2.6rem)}
+  /* Ghost behind title: reduce for performance */
+  .ghost{opacity:.04} /* less GPU cost on low-end */
+  /* Overview: single column on tiny screens */
+  .ov-grid{grid-template-columns:1fr}
+  /* Images: full-width on small screens */
+  .ls-r1,.ls-r2,.ls-r3,
+  .kz-sub,.sp-sub{grid-template-columns:1fr}
+  /* Cards: proper height on tiny screens */
+  .card{height:220px!important}
+  /* Lightbox image: fill more screen */
+  #lb img{max-width:96vw;max-height:80vh}
+}
+
+/* ── SAFE AREA (iPhone notch/Dynamic Island) ── */
+@supports(padding:max(0px)){
+  nav{
+    padding-left:max(3.5rem, env(safe-area-inset-left));
+    padding-right:max(3.5rem, env(safe-area-inset-right));
+  }
+  @media(max-width:768px){
+    nav{
+      padding-left:max(1.5rem, env(safe-area-inset-left));
+      padding-right:max(1.5rem, env(safe-area-inset-right));
+    }
+    footer{
+      padding-bottom:max(1.5rem, env(safe-area-inset-bottom));
+    }
+    #moverlay{
+      padding-top:max(1.5rem, env(safe-area-inset-top));
+      padding-bottom:max(1.5rem, env(safe-area-inset-bottom));
+    }
+  }
+}
