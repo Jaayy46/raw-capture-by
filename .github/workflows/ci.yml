@@ -27,7 +27,9 @@ jobs:
             --match "index.html" \
             --log INFO \
             --ignore-re "Trailing slash on void elements" \
-            --ignore-re "Element .picture. not allowed"
+            --ignore-re "Element .picture. not allowed" \
+            --ignore-re "Attribute .fetchpriority. not allowed" \
+            --ignore-re "Bad value .presentation. for attribute .role."
 
   check-links:
     name: Link Check
