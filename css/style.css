@@ -167,8 +167,37 @@ nav{
 .nav-logo{
   font-family:'Raleway',sans-serif;font-weight:300;font-size:.78rem;
   letter-spacing:.32em;text-transform:uppercase;color:var(--text);text-decoration:none;
+  flex-shrink:0;
 }
 .nav-logo:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
+/* Category links */
+.nav-links{
+  display:flex;gap:2rem;list-style:none;
+}
+.nav-links a{
+  font-family:'Raleway',sans-serif;font-weight:300;
+  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--text);text-decoration:none;
+  opacity:.55;transition:opacity .25s;white-space:nowrap;
+}
+.nav-links a:hover{opacity:1}
+.nav-links a:focus-visible{outline:2px solid var(--gold);outline-offset:3px;opacity:1}
+
+/* Right side wrapper */
+.nav-right{display:flex;align-items:center;gap:1.6rem;flex-shrink:0}
+
+/* Kontakt button */
+.nav-cta-btn{
+  font-family:'Raleway',sans-serif;font-weight:300;
+  font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--text);text-decoration:none;
+  border:1px solid rgba(240,236,228,.28);padding:.48rem 1.3rem;
+  transition:background .3s,border-color .3s;white-space:nowrap;
+}
+.nav-cta-btn:hover{background:rgba(240,236,228,.08);border-color:rgba(240,236,228,.6)}
+.nav-cta-btn:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
 .mbtn{
   background:none;border:none;cursor:none;
   display:flex;flex-direction:column;gap:5px;padding:4px;
@@ -637,6 +666,12 @@ footer{
   .ar-grid{grid-template-columns:1fr;grid-template-rows:auto}.ar-grid .card{grid-column:auto!important;height:270px!important}
   .ms-strip::before,.ms-strip::after{width:60px}
   .fw-feat{height:45vh}
+}
+
+/* ── RESPONSIVE 1024px — hide nav links ── */
+@media(max-width:1024px){
+  .nav-links{display:none}
+  .nav-cta-btn{display:none}
 }
 
 /* ── RESPONSIVE 768px ── */
