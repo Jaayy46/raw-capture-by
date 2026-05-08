@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""Local dev server for raw-capture-by portfolio."""
+import http.server, socketserver, os, sys
+
+PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 3333
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, fmt, *args):
+        print(f"  {self.address_string()} {fmt % args}")
+
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    print(f"Portfolio → http://localhost:{PORT}")
+    print(f"v2        → http://localhost:{PORT}/v2/")
+    print("Ctrl+C to stop\n")
+    httpd.serve_forever()
