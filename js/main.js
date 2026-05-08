@@ -52,6 +52,12 @@ initProg();
 window.addEventListener('resize', initProg, { passive: true });
 window.addEventListener('scroll', updateProg, { passive: true });
 
+/* NAV SCROLLED STATE */
+const navEl = document.querySelector('nav[aria-label="Hauptnavigation"]');
+window.addEventListener('scroll', () => {
+  if (navEl) navEl.classList.toggle('scrolled', scrollY > 60);
+}, { passive: true });
+
 /* MENU */
 const mbtn = document.getElementById('mbtn'), mov = document.getElementById('moverlay');
 let mopen = false;
