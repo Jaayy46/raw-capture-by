@@ -1,7 +1,7 @@
 /* ============================================================
    RAW CAPTURE BY — v3  Photo-First
    Livio Raschle Photography
-   Font: Playfair Display (display) + DM Sans (UI)
+   Font: Bebas Neue (display) + DM Sans (UI)
    ============================================================ */
 
 /* ── TOKENS ─────────────────────────────────────────────── */
@@ -15,7 +15,7 @@
   --fg3:     #3a3835;
   --gap:     2px;
 
-  --f-disp:  'Playfair Display', Georgia, serif;
+  --f-disp:  'Bebas Neue', Impact, sans-serif;
   --f-ui:    'DM Sans', system-ui, sans-serif;
 
   --ease:    cubic-bezier(0.22, 1, 0.36, 1);
@@ -81,8 +81,9 @@ ul { list-style: none; }
 }
 .nav-logo {
   font-family: var(--f-disp);
-  font-size: 13px;
-  letter-spacing: 0.1em;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--fg);
   flex-shrink: 0;
 }
@@ -203,10 +204,11 @@ ul { list-style: none; }
 }
 .hero-name {
   font-family: var(--f-disp);
-  font-size: clamp(68px, 10vw, 140px);
-  line-height: 0.87;
+  font-size: clamp(72px, 11vw, 160px);
+  line-height: 0.88;
   font-weight: 400;
-  letter-spacing: -0.025em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 .hero-name .ln1 {
   display: block;
@@ -215,8 +217,9 @@ ul { list-style: none; }
 }
 .hero-name .ln2 {
   display: block;
-  font-style: italic;
+  font-style: normal;
   color: rgba(244,240,235,0.45);
+  letter-spacing: 0.10em;
   opacity: 0;
   animation: fadeUp 0.9s 0.95s ease forwards;
 }
