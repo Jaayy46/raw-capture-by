@@ -11,7 +11,7 @@ export const SITE = {
   country:  'Schweiz',
   camera:   'Sony A7 IV',
   domain:   'raw-capture-by.com',
-  email:    'hallo@raw-capture-by.com',
+  email:    'raw.capture.by@gmail.com',
   instagram:'raw_capture_by',
   since:    2022,
 }
