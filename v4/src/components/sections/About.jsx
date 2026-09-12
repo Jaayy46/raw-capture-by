@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import BlurImage from '../ui/BlurImage'
-import { CATEGORIES, webp } from '../../data/photos'
+import { CATEGORIES, full } from '../../data/photos'
 import { GEAR } from '../../data/site.js'
 
 
@@ -106,7 +106,7 @@ export default function About() {
           className="relative self-start overflow-hidden rounded-2xl"
         >
           <BlurImage
-            src={webp(portrait)}
+            src={full(portrait)}
             alt={portrait.caption}
             className="w-full object-cover aspect-[4/5]"
           />

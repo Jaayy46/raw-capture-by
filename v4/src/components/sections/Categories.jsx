@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import BlurImage from '../ui/BlurImage'
 import Lightbox from '../ui/Lightbox'
-import { CATEGORIES, webp, jpg } from '../../data/photos'
+import { CATEGORIES, thumb, full } from '../../data/photos'
 
 /* ── Card with 3D tilt + cover parallax ─────────────────── */
 function CatCard({ cat, index, onOpen }) {
@@ -48,7 +48,7 @@ function CatCard({ cat, index, onOpen }) {
       <div className="absolute inset-0 overflow-hidden">
         <img
           ref={coverRef}
-          src={webp(cover)}
+          src={thumb(cover)}
           alt={cover.caption}
           loading={index < 3 ? 'eager' : 'lazy'}
           decoding="async"
@@ -126,7 +126,7 @@ function CategoryView({ cat, onClose, onPhoto }) {
               transition={{ delay: i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <BlurImage
-                src={webp(photo)}
+                src={thumb(photo)}
                 alt={photo.caption}
                 className="w-full block object-cover cursor-none"
                 onClick={() => onPhoto(i)}
@@ -200,7 +200,7 @@ export default function Categories() {
             item={cat.photos[lbIdx]}
             index={lbIdx}
             total={cat.photos.length}
-            srcFor={webp}
+            srcFor={full}
             onClose={() => setLbIdx(null)}
             onPrev={prevLb}
             onNext={nextLb}

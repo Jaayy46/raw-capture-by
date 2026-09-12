@@ -73,7 +73,8 @@ export const CATEGORIES = [
   },
 ]
 
-export const src  = (p, ext) => `/media/gallery/${p.file}.${ext}`
-export const jpg  = (p) => src(p, 'jpg')
-export const webp = (p) => p.webp ? src(p, 'webp') : src(p, 'jpg')
-export const ALL  = CATEGORIES.flatMap(c => c.photos.map(p => ({ ...p, cat: c.id })))
+// Web derivatives only — the originals in images/ are never served.
+// Grid tiles get the 900px set, the lightbox the 1600px one.
+export const thumb = (p) => `/media/thumb/${p.file}.webp`
+export const full  = (p) => `/media/full/${p.file}.webp`
+export const ALL   = CATEGORIES.flatMap(c => c.photos.map(p => ({ ...p, cat: c.id })))

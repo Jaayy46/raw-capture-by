@@ -19,9 +19,13 @@ const appRoot = resolve(here, '..')
 const repo    = resolve(appRoot, '..')
 
 const SRC = {
-  gallery: join(repo, 'images'),
-  hero:    join(repo, 'images', 'hero'),
-  video:   join(repo, 'video'),
+  // Web derivatives, not the originals: screen-sized and watermarked,
+  // built by scripts/derive-web-images.py. The full-resolution files in
+  // images/ are never shipped.
+  full:  join(repo, 'images', 'web', 'full'),
+  thumb: join(repo, 'images', 'web', 'thumb'),
+  hero:  join(repo, 'images', 'hero'),
+  video: join(repo, 'video'),
 }
 const OUT = join(appRoot, 'public', 'media')
 
@@ -31,10 +35,11 @@ const { heroFiles }  = await import('../src/data/hero.js')
 // ── Build the manifest ────────────────────────────────────
 const wanted = []
 
-// Gallery: the site renders WebP only — the JPGs never ship.
+// Gallery: both derivative sizes per photo.
 for (const cat of CATEGORIES)
   for (const p of cat.photos)
-    wanted.push([join(SRC.gallery, `${p.file}.webp`), join(OUT, 'gallery', `${p.file}.webp`)])
+    for (const set of ['full', 'thumb'])
+      wanted.push([join(SRC[set], `${p.file}.webp`), join(OUT, set, `${p.file}.webp`)])
 
 // Hero corridor: full and @sm variant per frame.
 for (const file of heroFiles())

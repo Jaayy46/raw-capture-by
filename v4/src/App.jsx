@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import CustomCursor from './components/ui/CustomCursor'
+import CustomCursor  from './components/ui/CustomCursor'
+import ProtectImages from './components/ui/ProtectImages'
 import Nav           from './components/ui/Nav'
 import Hero          from './components/sections/Hero'
 import Categories    from './components/sections/Categories'
@@ -24,6 +25,8 @@ export default function App() {
       <div className="hidden md:block">
         <CustomCursor />
       </div>
+
+      <ProtectImages />
 
       {/* Nav */}
       <Nav onLogoClick={triggerShake} />

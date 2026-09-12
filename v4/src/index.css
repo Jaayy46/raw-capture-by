@@ -28,6 +28,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+
+/* ── IMAGE DETERRENTS ─────────────────────────────────── */
+/* Stops the iOS/Android long-press "Save Image" sheet and the accidental
+   drag-to-desktop. Not protection — see ProtectImages.jsx. Scoped to
+   media so text stays selectable. */
+img, picture, video {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 /* ── GRAIN ────────────────────────────────────────────── */
 .grain::after {
   content: '';
