@@ -23,7 +23,7 @@ function Reel({ reel, index }) {
       className="relative flex-none w-[190px] md:w-[230px] group"
       data-cursor="play"
     >
-      <div className="relative overflow-hidden aspect-[9/16] bg-bg2">
+      <div className="relative overflow-hidden rounded-2xl aspect-[9/16] bg-bg2">
         <img
           src={webp(reel.thumb)}
           alt={reel.title}

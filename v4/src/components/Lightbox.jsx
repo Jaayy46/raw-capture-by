@@ -64,7 +64,7 @@ export default function Lightbox({ item, index, total, srcFor, onClose, onPrev, 
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           src={srcFor(item)}
           alt={item.caption}
-          className="max-w-full max-h-full object-contain"
+          className="max-w-full max-h-full object-contain rounded-xl"
         />
       </div>
 

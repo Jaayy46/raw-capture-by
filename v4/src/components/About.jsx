@@ -97,7 +97,7 @@ export default function About() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative self-start"
+          className="relative self-start overflow-hidden rounded-2xl"
         >
           <BlurImage
             src={webp(portrait)}

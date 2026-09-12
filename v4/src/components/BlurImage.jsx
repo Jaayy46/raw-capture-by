@@ -10,8 +10,9 @@ export default function BlurImage({ src, alt, className = '', onClick, dataCurso
       onLoad={() => setLoaded(true)}
       onClick={onClick}
       data-cursor={dataCursor || 'view'}
-      className={`transition-[filter] duration-700 ease-out
-        ${loaded ? 'blur-0' : 'blur-[12px]'}
+      className={`transition-[filter,transform,opacity] duration-[900ms]
+        ease-[cubic-bezier(0.22,1,0.36,1)]
+        ${loaded ? 'blur-0 scale-100 opacity-100' : 'blur-xl scale-[1.04] opacity-0'}
         ${className}`}
     />
   )

@@ -42,7 +42,8 @@ function CatCard({ cat, index, onOpen }) {
         transform: `perspective(1100px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         transition: 'transform 0.18s cubic-bezier(0.22,1,0.36,1)',
       }}
-      className="cat-card group relative block w-full overflow-hidden bg-bg2 aspect-[4/5] text-left"
+      className="cat-card group relative block w-full overflow-hidden rounded-2xl
+        bg-bg2 aspect-[4/5] text-left"
     >
       <div className="absolute inset-0 overflow-hidden">
         <img
@@ -119,7 +120,7 @@ function CategoryView({ cat, onClose, onPhoto }) {
           {cat.photos.map((photo, i) => (
             <motion.figure
               key={photo.file}
-              className="masonry-item group relative overflow-hidden"
+              className="masonry-item group relative overflow-hidden rounded-xl bg-bg2"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

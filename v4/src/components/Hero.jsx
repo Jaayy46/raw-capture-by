@@ -64,8 +64,17 @@ const FRAG = /* glsl */`
   uniform vec3  uFogColor;
   uniform float uFogNear;
   uniform float uFogFar;
+  uniform vec2  uSize;     // plane size in world units
+  uniform float uRadius;   // corner radius, world units
+  uniform float uFeather;  // edge softness, world units
   varying vec2  vUv;
   varying float vFogDepth;
+
+  // Signed distance to a rounded box — negative inside
+  float sdRoundBox(vec2 p, vec2 b, float r) {
+    vec2 q = abs(p) - b + r;
+    return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
+  }
 
   void main() {
     vec2 c  = vUv - 0.5;
@@ -78,15 +87,23 @@ const FRAG = /* glsl */`
     float bC = texture2D(uTex, vUv - off).b;
     vec3 col = vec3(rC, gC, bC);
 
-    // Per-plane vignette
-    float vig = smoothstep(0.62, 0.10, r2);
-    col *= mix(0.42, 1.0, vig);
+    // Per-plane vignette — gentler now the edge itself dissolves
+    float vig = smoothstep(0.72, 0.02, r2);
+    col *= mix(0.80, 1.0, vig);
+
+    // Rounded, feathered border: the photo melts into the dark
+    // instead of ending on a hard rectangle.
+    vec2  p      = c * uSize;
+    vec2  extent = uSize * 0.5 - uFeather;
+    float d      = sdRoundBox(p, extent, uRadius);
+    float edge = 1.0 - smoothstep(-uFeather, uFeather, d);
+    edge = edge * edge * (3.0 - 2.0 * edge);  // ease the falloff
 
     // Distance fog toward page background
     float f = smoothstep(uFogNear, uFogFar, vFogDepth);
     col = mix(col, uFogColor, f);
 
-    gl_FragColor = vec4(col, uOpacity * (1.0 - f * 0.85));
+    gl_FragColor = vec4(col, uOpacity * edge * (1.0 - f * 0.85));
   }
 `
 
@@ -94,14 +111,22 @@ function PhotoPlane({ item, texture, aberration }) {
   const mesh = useRef()
   const mat  = useRef()
 
-  const uniforms = useMemo(() => ({
-    uTex:        { value: texture },
-    uOpacity:    { value: 1 },
-    uAberration: { value: aberration },
-    uFogColor:   { value: new THREE.Color('#0A0A0B') },
-    uFogNear:    { value: 6 },
-    uFogFar:     { value: 30 },
-  }), [texture, aberration])
+  const uniforms = useMemo(() => {
+    const [w, h] = item.size
+    // Feather scales with the plane so every photo dissolves alike
+    const feather = Math.min(w, h) * 0.085
+    return {
+      uTex:        { value: texture },
+      uOpacity:    { value: 1 },
+      uAberration: { value: aberration },
+      uFogColor:   { value: new THREE.Color('#0A0A0B') },
+      uFogNear:    { value: 6 },
+      uFogFar:     { value: 30 },
+      uSize:       { value: new THREE.Vector2(w, h) },
+      uRadius:     { value: Math.min(w, h) * 0.13 },
+      uFeather:    { value: feather },
+    }
+  }, [texture, aberration, item.size])
 
   useFrame((state) => {
     if (!mesh.current) return
