@@ -30,13 +30,13 @@ export const NAV = [
   { label: 'Kontakt',  id: 'contact' },
 ]
 
-// Derived from the EXIF in the photos themselves
+// Names taken from the LensModel EXIF of the originals, so they match
+// what actually shot the photos.
 export const GEAR = [
   { name: 'Sony A7 IV',                         type: 'Body' },
+  { name: 'Sony FE 16mm f/1.8 G',               type: 'Objektiv' },
   { name: 'Sigma 24-70mm f/2.8 DG DN Art',      type: 'Objektiv' },
   { name: 'Sony FE 100-400mm f/4.5-5.6 GM OSS', type: 'Objektiv' },
-  { name: 'Adobe Lightroom Classic',            type: 'Entwicklung' },
-  { name: 'Adobe Premiere Pro',                 type: 'Schnitt' },
 ]
 
 export const FILM = {
