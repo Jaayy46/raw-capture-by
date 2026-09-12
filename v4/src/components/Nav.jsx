@@ -59,7 +59,8 @@ export default function Nav({ onLogoClick }) {
       >
         {/* Logo */}
         <MagneticBtn onClick={onLogoClick}
-          className="font-mono text-xs tracking-[0.22em] text-fg/80 hover:text-fg transition-colors uppercase">
+          className="font-mono text-xs tracking-[0.22em] text-fg/80 hover:text-fg
+            transition-colors uppercase inline-flex items-center min-h-[44px] -my-3">
           raw_capture_by
         </MagneticBtn>
 
@@ -80,7 +81,13 @@ export default function Nav({ onLogoClick }) {
         </MagneticBtn>
 
         {/* Burger (mobile) */}
-        <button className="md:hidden flex flex-col gap-1.5 p-1" onClick={() => setOpen(!open)}>
+        <button
+          aria-label={open ? 'Menü schliessen' : 'Menü öffnen'}
+          aria-expanded={open}
+          className="md:hidden flex flex-col justify-center items-end gap-1.5
+            -mr-3 w-11 h-11 px-3"
+          onClick={() => setOpen(!open)}
+        >
           <motion.span animate={{ rotate: open ? 45 : 0, y: open ? 6 : 0 }}
             className="block w-5 h-px bg-fg origin-center" />
           <motion.span animate={{ opacity: open ? 0 : 1 }}

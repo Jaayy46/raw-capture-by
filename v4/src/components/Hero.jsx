@@ -33,7 +33,15 @@ const PICKS = [
   ['_A7_1061', -2.9,  0.35, -37.2, 2.6,  0.04],  // closer
 ]
 
-const LAYOUT = PICKS.map(([file, x, y, z, h, rotZ], i) => {
+// Phones get a lighter corridor: every other frame, keeping the heroes.
+// Checks the SHORT edge plus pointer type, so a handset in landscape
+// (innerWidth ~812) is still treated as a phone.
+const SMALL = typeof window !== 'undefined' && (
+  Math.min(window.innerWidth, window.innerHeight) < 640 ||
+  window.matchMedia('(pointer: coarse)').matches
+)
+
+const buildLayout = (picks) => picks.map(([file, x, y, z, h, rotZ], i) => {
   const p = byFile(file)
   const aspect = p ? p.w / p.h : 1.5
   // Toe-in: frames turn to face the flight path instead of standing
@@ -41,7 +49,10 @@ const LAYOUT = PICKS.map(([file, x, y, z, h, rotZ], i) => {
   const rotY = -Math.sign(x) * Math.min(Math.abs(x) * 0.055, 0.26)
   return {
     file,
-    url: webp(p),
+    // Corridor frames are a few hundred px on screen — the full-size
+    // originals would cost ~200 MB of texture memory. Dedicated
+    // downscales: 1200px long edge, 700px on phones.
+    url: `/images/hero/${file}${SMALL ? '@sm' : ''}.webp`,
     caption: p?.caption ?? '',
     pos: [x, y, z],
     rotZ,
@@ -50,6 +61,10 @@ const LAYOUT = PICKS.map(([file, x, y, z, h, rotZ], i) => {
     phase: i * 1.37,
   }
 })
+
+const LAYOUT = buildLayout(
+  SMALL ? PICKS.filter((_, i) => i % 2 === 0 || [3, 7, 10].includes(i)) : PICKS
+)
 
 const URLS = LAYOUT.map(l => l.url)
 
@@ -307,13 +322,17 @@ export default function Hero() {
     <>
       <Loader done={ready} />
 
-      <section ref={containerRef} className="relative h-[420vh]" id="work">
-        <div className="sticky top-0 h-screen overflow-hidden bg-bg">
+      {/* svh, not vh — vh jumps on mobile when the browser chrome
+          collapses mid-scroll and the sticky frame would resize. */}
+      <section ref={containerRef} className="relative h-[420svh]" id="work">
+        <div className="sticky top-0 h-[100svh] overflow-hidden bg-bg">
 
           {/* 3D corridor */}
           <div className="absolute inset-0 z-10">
             <Canvas
-              dpr={[1, 2]}
+              // Cap DPR on phones — a 3x retina buffer of this scene is
+              // a lot of fill rate for no visible gain at this size.
+              dpr={isSmall ? [1, 1.5] : [1, 2]}
               camera={{ fov: 58, position: [0, 0, 1.5], near: 0.1, far: 60 }}
               gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
               onCreated={({ gl }) => gl.setClearColor('#0A0A0B', 1)}
@@ -332,6 +351,12 @@ export default function Hero() {
           <div className="absolute inset-0 z-20 pointer-events-none"
             style={{ background:
               'radial-gradient(ellipse 92% 88% at 50% 50%, transparent 46%, rgba(10,10,11,0.92) 100%)' }} />
+
+          {/* Scrim behind the centred copy. On a narrow screen the
+              frames crowd the middle and the text loses contrast. */}
+          <div className="absolute inset-0 z-20 pointer-events-none"
+            style={{ background:
+              'radial-gradient(ellipse 62% 34% at 50% 50%, rgba(10,10,11,0.72) 0%, transparent 72%)' }} />
 
           {/* Intro — fades as the flight begins */}
           <motion.div

@@ -84,15 +84,16 @@ export default function Contact() {
               ['Web',       'raw-capture-by.com',       'https://raw-capture-by.com'],
               ['Standort',  'St. Gallen, Schweiz',      null],
             ].map(([label, value, href]) => (
-              <div key={label} className="flex items-baseline gap-5 border-b border-border py-3.5">
+              <div key={label} className="flex items-baseline gap-5 border-b border-border py-2">
                 <span className="font-mono text-[9px] tracking-[0.2em] text-fg2 uppercase w-24 shrink-0">
                   {label}
                 </span>
                 {href ? (
                   <a href={href} target={href.startsWith('http') ? '_blank' : undefined}
                     rel="noreferrer"
-                    className="font-display text-sm text-fg hover:text-fg2 transition-colors">
-                    {value} <span className="text-fg2">→</span>
+                    className="font-display text-sm text-fg hover:text-fg2 transition-colors
+                      inline-flex items-center min-h-[44px]">
+                    {value}&nbsp;<span className="text-fg2">→</span>
                   </a>
                 ) : (
                   <span className="font-display text-sm text-fg">{value}</span>
@@ -136,7 +137,7 @@ export default function Contact() {
         </p>
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="font-mono text-[9px] tracking-[0.18em] text-fg2 hover:text-fg
-            transition-colors uppercase">
+            transition-colors uppercase inline-flex items-center min-h-[44px] px-2 -mx-2">
           ↑ Nach oben
         </button>
       </footer>
