@@ -82,7 +82,7 @@ export default function Contact() {
               ['Instagram', '@raw_capture_by',          'https://instagram.com/raw_capture_by'],
               ['Mail',      'hallo@raw-capture-by.com', 'mailto:hallo@raw-capture-by.com'],
               ['Web',       'raw-capture-by.com',       'https://raw-capture-by.com'],
-              ['Standort',  'St. Gallen, Schweiz',      null],
+              ['Standort',  'Kanton Zürich, Schweiz',   null],
             ].map(([label, value, href]) => (
               <div key={label} className="flex items-baseline gap-5 border-b border-border py-2">
                 <span className="font-mono text-[9px] tracking-[0.2em] text-fg2 uppercase w-24 shrink-0">
@@ -133,7 +133,7 @@ export default function Contact() {
       <footer className="mt-24 md:mt-32 py-7 border-t border-border
         flex flex-wrap items-center justify-between gap-4">
         <p className="font-mono text-[9px] tracking-[0.18em] text-fg2/60 uppercase">
-          © {new Date().getFullYear()} raw_capture_by · Livio Raschle · St. Gallen
+          © {new Date().getFullYear()} raw_capture_by · Livio Raschle · Kanton Zürich
         </p>
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="font-mono text-[9px] tracking-[0.18em] text-fg2 hover:text-fg

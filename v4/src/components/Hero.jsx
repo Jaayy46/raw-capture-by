@@ -368,7 +368,7 @@ export default function Hero() {
             </p>
             <div className="w-px h-14 bg-gradient-to-b from-fg/40 to-transparent my-7" />
             <p className="font-mono text-[9px] tracking-[0.26em] text-fg2 uppercase text-center">
-              St. Gallen · Schweiz
+              Kanton Zürich · Schweiz
             </p>
           </motion.div>
 
