@@ -22,14 +22,18 @@ jobs:
 
       - name: Validate HTML
         run: |
+          # --ignore-re takes a LIST. Repeating the flag does not append —
+          # the last occurrence wins, which silently disabled every
+          # pattern but the final one. Pass them all to one flag.
           html5validator \
             --root . \
             --match "index.html" \
             --log INFO \
-            --ignore-re "Trailing slash on void elements" \
-            --ignore-re "Element .picture. not allowed" \
-            --ignore-re "fetchpriority" \
-            --ignore-re "Bad value .presentation. for attribute .role."
+            --ignore-re \
+              "Trailing slash on void elements" \
+              "Element .picture. not allowed" \
+              "fetchpriority" \
+              "Bad value .presentation. for attribute .role."
 
   check-links:
     name: Link Check

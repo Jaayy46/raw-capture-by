@@ -95,7 +95,7 @@ const openLb = (items, idx) => {
 const closeLb = () => {
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(() => { lbImg.src = ''; }, 360);
+  setTimeout(() => { lbImg.removeAttribute('src'); }, 360);
 };
 
 const prevLb = () => { lbCurrent = (lbCurrent - 1 + lbItems.length) % lbItems.length; showLb(); };
