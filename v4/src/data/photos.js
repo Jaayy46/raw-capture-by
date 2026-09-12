@@ -73,7 +73,7 @@ export const CATEGORIES = [
   },
 ]
 
-export const src  = (p, ext) => `/images/${p.file}.${ext}`
+export const src  = (p, ext) => `/media/gallery/${p.file}.${ext}`
 export const jpg  = (p) => src(p, 'jpg')
 export const webp = (p) => p.webp ? src(p, 'webp') : src(p, 'jpg')
 export const ALL  = CATEGORIES.flatMap(c => c.photos.map(p => ({ ...p, cat: c.id })))

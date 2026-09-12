@@ -1,8 +1,8 @@
 import { useRef, useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import BlurImage from './BlurImage'
-import Lightbox from './Lightbox'
-import { CATEGORIES, webp, jpg } from '../data/photos'
+import BlurImage from '../ui/BlurImage'
+import Lightbox from '../ui/Lightbox'
+import { CATEGORIES, webp, jpg } from '../../data/photos'
 
 /* ── Card with 3D tilt + cover parallax ─────────────────── */
 function CatCard({ cat, index, onOpen }) {

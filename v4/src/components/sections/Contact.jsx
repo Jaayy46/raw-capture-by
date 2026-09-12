@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { LINKS, SITE } from '../../data/site.js'
 
 function Field({ label, name, type = 'text', placeholder, value, onChange, multiline }) {
   const Tag = multiline ? 'textarea' : 'input'
@@ -47,7 +48,7 @@ export default function Contact() {
     // Kein Backend — öffnet den Mail-Client mit vorbefülltem Text
     const subject = encodeURIComponent(`Anfrage von ${form.name}`)
     const body    = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`)
-    window.location.href = `mailto:hallo@raw-capture-by.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`
     setSent(true)
     setTimeout(() => setSent(false), 4000)
   }
@@ -78,12 +79,7 @@ export default function Contact() {
           </p>
 
           <div className="space-y-1">
-            {[
-              ['Instagram', '@raw_capture_by',          'https://instagram.com/raw_capture_by'],
-              ['Mail',      'hallo@raw-capture-by.com', 'mailto:hallo@raw-capture-by.com'],
-              ['Web',       'raw-capture-by.com',       'https://raw-capture-by.com'],
-              ['Standort',  'Kanton Zürich, Schweiz',   null],
-            ].map(([label, value, href]) => (
+            {LINKS.map(({ label, value, href }) => (
               <div key={label} className="flex items-baseline gap-5 border-b border-border py-2">
                 <span className="font-mono text-[9px] tracking-[0.2em] text-fg2 uppercase w-24 shrink-0">
                   {label}
@@ -133,7 +129,7 @@ export default function Contact() {
       <footer className="mt-24 md:mt-32 py-7 border-t border-border
         flex flex-wrap items-center justify-between gap-4">
         <p className="font-mono text-[9px] tracking-[0.18em] text-fg2/60 uppercase">
-          © {new Date().getFullYear()} raw_capture_by · Livio Raschle · Kanton Zürich
+          © {new Date().getFullYear()} {SITE.handle} · {SITE.name} · {SITE.location}
         </p>
         <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="font-mono text-[9px] tracking-[0.18em] text-fg2 hover:text-fg

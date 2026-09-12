@@ -1,12 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { NAV as links, SITE } from '../../data/site.js'
 
-const links = [
-  { label: 'Arbeiten', id: 'work' },
-  { label: 'Über',     id: 'about' },
-  { label: 'Video',    id: 'video' },
-  { label: 'Kontakt',  id: 'contact' },
-]
+
 
 function MagneticBtn({ children, href, onClick, className }) {
   const ref = useRef()
@@ -61,7 +57,7 @@ export default function Nav({ onLogoClick }) {
         <MagneticBtn onClick={onLogoClick}
           className="font-mono text-xs tracking-[0.22em] text-fg/80 hover:text-fg
             transition-colors uppercase inline-flex items-center min-h-[44px] -my-3">
-          raw_capture_by
+          {SITE.handle}
         </MagneticBtn>
 
         {/* Desktop links */}
@@ -75,9 +71,9 @@ export default function Nav({ onLogoClick }) {
         </div>
 
         {/* Instagram */}
-        <MagneticBtn href="https://instagram.com/raw_capture_by" target="_blank"
+        <MagneticBtn href={`https://instagram.com/${SITE.instagram}`} target="_blank"
           className="hidden md:block font-mono text-[10px] tracking-[0.18em] text-fg2 hover:text-fg transition-colors">
-          @raw_capture_by
+          @{SITE.instagram}
         </MagneticBtn>
 
         {/* Burger (mobile) */}

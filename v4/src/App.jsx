@@ -1,12 +1,12 @@
 import { useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import CustomCursor from './components/CustomCursor'
-import Nav           from './components/Nav'
-import Hero          from './components/Hero'
-import Categories    from './components/Categories'
-import About         from './components/About'
-import Videos        from './components/Videos'
-import Contact       from './components/Contact'
+import CustomCursor from './components/ui/CustomCursor'
+import Nav           from './components/ui/Nav'
+import Hero          from './components/sections/Hero'
+import Categories    from './components/sections/Categories'
+import About         from './components/sections/About'
+import Film          from './components/sections/Film'
+import Contact       from './components/sections/Contact'
 
 export default function App() {
   const [shaking, setShaking] = useState(false)
@@ -33,7 +33,7 @@ export default function App() {
         <Hero />
         <Categories />
         <About />
-        <Videos />
+        <Film />
         <Contact />
       </main>
     </div>

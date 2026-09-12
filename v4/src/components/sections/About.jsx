@@ -1,15 +1,8 @@
 import { motion } from 'framer-motion'
-import BlurImage from './BlurImage'
-import { CATEGORIES, webp } from '../data/photos'
+import BlurImage from '../ui/BlurImage'
+import { CATEGORIES, webp } from '../../data/photos'
+import { GEAR } from '../../data/site.js'
 
-// Gear — aus den EXIF-Daten der Bilder abgeleitet
-const GEAR = [
-  { name: 'Sony A7 IV',                  type: 'Body' },
-  { name: 'Sigma 24-70mm f/2.8 DG DN Art', type: 'Objektiv' },
-  { name: 'Sony FE 100-400mm f/4.5-5.6 GM OSS', type: 'Objektiv' },
-  { name: 'Adobe Lightroom Classic',     type: 'Entwicklung' },
-  { name: 'Adobe Premiere Pro',          type: 'Schnitt' },
-]
 
 const STATS = [
   { value: String(CATEGORIES.length), label: 'Bereiche' },
