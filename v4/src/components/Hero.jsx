@@ -11,33 +11,41 @@ import { CATEGORIES, webp } from '../data/photos'
    ──────────────────────────────────────────────────────── */
 const byFile = (f) => CATEGORIES.flatMap(c => c.photos).find(p => p.file === f)
 
+/* Asymmetric composition, not a mirrored L/R stack.
+   h drives a deliberate hierarchy — hero frames (~3+), mid (~2),
+   accents (~1.5) — and the z rhythm clusters and opens up rather
+   than stepping evenly.
+   [file, x, y, z, h, rotZ] */
 const PICKS = [
-  ['A7_06806', -3.6,  0.35, -0.10],
-  ['_A7_8079',  3.4, -0.20, -0.14],
-  ['_A7_9302', -2.9,  1.55,  0.08],
-  ['_A7_8226',  3.0,  0.90, -0.16],
-  ['A7_00207', -3.5, -1.30,  0.12],
-  ['_A7_7305',  2.7, -1.45, -0.10],
-  ['_DSC5654', -3.2,  1.20,  0.14],
-  ['_A7_0044',  3.5,  0.10, -0.12],
-  ['_A7_2632', -2.8, -0.85,  0.10],
-  ['_A7_9628',  3.1,  1.50, -0.15],
-  ['_A7_5410', -3.4,  0.05,  0.11],
-  ['_A7_1826',  2.9, -1.10, -0.09],
+  ['A7_06806', -3.9, -0.15,  -5.0, 3.0,  0.04],  // Seealpsee — opener
+  ['_A7_8079',  3.1,  0.55,  -7.4, 2.8, -0.05],
+  ['_A7_9302', -1.55, 1.75,  -9.2, 1.5,  0.09],  // accent, near the axis
+  ['_A7_8226',  3.6, -0.50, -12.6, 3.5, -0.03],  // hero
+  ['A7_00207', -3.3,  0.90, -14.3, 1.9,  0.07],
+  ['_A7_7305', -2.2, -1.60, -16.0, 1.6, -0.06],
+  ['_DSC5654',  3.3,  1.50, -19.4, 1.8,  0.05],
+  ['_A7_0044', -3.7, -0.35, -21.0, 3.1, -0.04],  // hero
+  ['_A7_9628',  2.4, -1.50, -23.6, 1.5,  0.08],
+  ['_A7_2632', -2.6,  1.55, -26.8, 2.0, -0.07],
+  ['_A7_5410',  3.5, -0.25, -28.4, 3.2,  0.03],  // hero
+  ['_A7_1826', -3.2,  1.20, -31.5, 1.7,  0.06],
+  ['_A7_9095',  2.6, -1.35, -34.0, 2.2, -0.05],
+  ['_A7_1061', -2.9,  0.35, -37.2, 2.6,  0.04],  // closer
 ]
 
-// Depth spacing: first plane near, then receding
-const LAYOUT = PICKS.map(([file, x, y, rot], i) => {
+const LAYOUT = PICKS.map(([file, x, y, z, h, rotZ], i) => {
   const p = byFile(file)
-  const z = -4.5 - i * 3.1
   const aspect = p ? p.w / p.h : 1.5
-  const h = 2.5
+  // Toe-in: frames turn to face the flight path instead of standing
+  // flat to camera. Further out from the axis → turned more.
+  const rotY = -Math.sign(x) * Math.min(Math.abs(x) * 0.055, 0.26)
   return {
     file,
     url: webp(p),
     caption: p?.caption ?? '',
     pos: [x, y, z],
-    rot,
+    rotZ,
+    rotY,
     size: [h * aspect, h],
     phase: i * 1.37,
   }
@@ -66,7 +74,10 @@ const FRAG = /* glsl */`
   uniform float uFogFar;
   uniform vec2  uSize;     // plane size in world units
   uniform float uRadius;   // corner radius, world units
-  uniform float uFeather;  // edge softness, world units
+  uniform float uAA;       // edge antialias width, world units
+  uniform float uFocal;    // distance of the sharp plane
+  uniform float uDofRange; // how fast focus falls away
+  uniform float uMaxBlur;  // max mip bias
   varying vec2  vUv;
   varying float vFogDepth;
 
@@ -80,30 +91,47 @@ const FRAG = /* glsl */`
     vec2 c  = vUv - 0.5;
     float r2 = dot(c, c);
 
-    // Chromatic aberration — grows toward the edges
-    vec2 off = c * r2 * uAberration;
-    float rC = texture2D(uTex, vUv + off).r;
-    float gC = texture2D(uTex, vUv).g;
-    float bC = texture2D(uTex, vUv - off).b;
+    // ── Depth of field ──────────────────────────────────
+    // Circle of confusion from the distance to the focal plane,
+    // spent as a mip bias: frames resolve as they reach focus and
+    // soften again as they pass. Cheap, and it reads like a lens.
+    float coc  = clamp(abs(vFogDepth - uFocal) / uDofRange, 0.0, 1.0);
+    coc = pow(coc, 1.35);
+    float bias = coc * uMaxBlur;
+
+    // Lateral chromatic aberration, stronger where defocused —
+    // the way a real lens misbehaves off the focal plane.
+    vec2 off = c * r2 * uAberration * (0.35 + coc * 1.6);
+    float rC = texture2D(uTex, vUv + off, bias).r;
+    float gC = texture2D(uTex, vUv,       bias).g;
+    float bC = texture2D(uTex, vUv - off, bias).b;
     vec3 col = vec3(rC, gC, bC);
 
-    // Per-plane vignette — gentler now the edge itself dissolves
-    float vig = smoothstep(0.72, 0.02, r2);
-    col *= mix(0.80, 1.0, vig);
+    // Defocused frames sit back in the mix
+    col *= mix(1.0, 0.62, coc);
 
-    // Rounded, feathered border: the photo melts into the dark
-    // instead of ending on a hard rectangle.
+    // Light interior vignette only — the edge itself stays crisp
+    float vig = smoothstep(0.78, 0.06, r2);
+    col *= mix(0.88, 1.0, vig);
+
+    // ── Crisp edge ──────────────────────────────────────
+    // Precise rounded rectangle, antialiased over a hair's width
+    // instead of dissolved over a wide feather.
     vec2  p      = c * uSize;
-    vec2  extent = uSize * 0.5 - uFeather;
+    vec2  extent = uSize * 0.5 - uAA;
     float d      = sdRoundBox(p, extent, uRadius);
-    float edge = 1.0 - smoothstep(-uFeather, uFeather, d);
-    edge = edge * edge * (3.0 - 2.0 * edge);  // ease the falloff
+    float mask   = 1.0 - smoothstep(-uAA, uAA, d);
+
+    // Thin inner rim so the frame reads as a printed edge,
+    // and fades out as the frame goes soft.
+    float rim = smoothstep(-uRadius * 0.55, -uAA, d) * mask;
+    col = mix(col, vec3(1.0), rim * 0.16 * (1.0 - coc));
 
     // Distance fog toward page background
     float f = smoothstep(uFogNear, uFogFar, vFogDepth);
     col = mix(col, uFogColor, f);
 
-    gl_FragColor = vec4(col, uOpacity * edge * (1.0 - f * 0.85));
+    gl_FragColor = vec4(col, uOpacity * mask * (1.0 - f * 0.85));
   }
 `
 
@@ -113,32 +141,33 @@ function PhotoPlane({ item, texture, aberration }) {
 
   const uniforms = useMemo(() => {
     const [w, h] = item.size
-    // Feather scales with the plane so every photo dissolves alike
-    const feather = Math.min(w, h) * 0.085
     return {
       uTex:        { value: texture },
       uOpacity:    { value: 1 },
       uAberration: { value: aberration },
       uFogColor:   { value: new THREE.Color('#0A0A0B') },
-      uFogNear:    { value: 6 },
-      uFogFar:     { value: 30 },
+      uFogNear:    { value: 10 },
+      uFogFar:     { value: 34 },
       uSize:       { value: new THREE.Vector2(w, h) },
-      uRadius:     { value: Math.min(w, h) * 0.13 },
-      uFeather:    { value: feather },
+      uRadius:     { value: Math.min(w, h) * 0.055 },
+      uAA:         { value: Math.min(w, h) * 0.006 },
+      uFocal:      { value: 8.5 },
+      uDofRange:   { value: 15 },
+      uMaxBlur:    { value: 2.4 },
     }
   }, [texture, aberration, item.size])
 
   useFrame((state) => {
     if (!mesh.current) return
     const t = state.clock.elapsedTime
-    // Gentle drift — each plane on its own phase
-    mesh.current.position.y = item.pos[1] + Math.sin(t * 0.35 + item.phase) * 0.09
-    mesh.current.rotation.z = item.rot + Math.sin(t * 0.22 + item.phase) * 0.012
-    mesh.current.rotation.y = Math.sin(t * 0.18 + item.phase) * 0.05
+    // Gentle drift — each plane on its own phase, around its toe-in
+    mesh.current.position.y = item.pos[1] + Math.sin(t * 0.35 + item.phase) * 0.07
+    mesh.current.rotation.z = item.rotZ + Math.sin(t * 0.22 + item.phase) * 0.010
+    mesh.current.rotation.y = item.rotY + Math.sin(t * 0.18 + item.phase) * 0.025
   })
 
   return (
-    <mesh ref={mesh} position={item.pos} rotation={[0, 0, item.rot]}>
+    <mesh ref={mesh} position={item.pos} rotation={[0, item.rotY, item.rotZ]}>
       <planeGeometry args={item.size} />
       <shaderMaterial
         ref={mat}
@@ -178,12 +207,18 @@ function Rig({ scrollProg, reduced }) {
       return
     }
 
+    // The path itself curves through the corridor rather than running
+    // dead straight — the frames slide past at changing angles.
+    const driftX = Math.sin(sp * Math.PI * 1.6) * 0.95
+    const driftY = Math.cos(sp * Math.PI * 1.15) * 0.32 - 0.32
+
     camera.position.z += (zTarget - camera.position.z) * 0.09
-    camera.position.x += (target.current.x * 0.85 - camera.position.x) * 0.045
-    camera.position.y += (-target.current.y * 0.5 - camera.position.y) * 0.045
-    // Slight roll into the turn
-    camera.rotation.z += ((-target.current.x * 0.02) - camera.rotation.z) * 0.04
-    camera.lookAt(camera.position.x * 0.25, camera.position.y * 0.25, camera.position.z - 8)
+    camera.position.x += ((driftX + target.current.x * 0.7) - camera.position.x) * 0.045
+    camera.position.y += ((driftY - target.current.y * 0.42) - camera.position.y) * 0.045
+    // Bank into the turn — reads as flight, not a slider
+    const bank = -(target.current.x * 0.018) - Math.cos(sp * Math.PI * 1.6) * 0.03
+    camera.rotation.z += (bank - camera.rotation.z) * 0.04
+    camera.lookAt(camera.position.x * 0.3, camera.position.y * 0.3, camera.position.z - 8)
   })
 
   return null
@@ -194,9 +229,12 @@ function Scene({ scrollProg, reduced, aberration }) {
   useMemo(() => {
     textures.forEach(t => {
       // Raw sRGB passthrough — the shader writes final colour itself
-      t.colorSpace = THREE.LinearSRGBColorSpace
-      t.minFilter  = THREE.LinearMipmapLinearFilter
-      t.anisotropy = 8
+      t.colorSpace     = THREE.LinearSRGBColorSpace
+      t.minFilter      = THREE.LinearMipmapLinearFilter
+      t.magFilter      = THREE.LinearFilter
+      t.generateMipmaps = true   // the DOF mip bias depends on these
+      t.anisotropy     = 8
+      t.needsUpdate    = true
     })
   }, [textures])
 
