@@ -11,21 +11,9 @@ const GEAR = [
   { name: 'Adobe Premiere Pro',          type: 'Schnitt' },
 ]
 
-// Ranges read back out of the photos' own EXIF, so they stay honest
-// if the gallery changes.
-const nums = (key) => CATEGORIES
-  .flatMap(c => c.photos)
-  .map(p => p[key] && parseFloat(p[key]))
-  .filter(Boolean)
-
-const focals = nums('focal')
-const isos   = nums('iso')
-
 const STATS = [
   { value: String(CATEGORIES.length), label: 'Bereiche' },
   { value: '4+', label: 'Jahre' },
-  { value: `${Math.min(...focals)}–${Math.max(...focals)}`, label: 'mm Brennweite' },
-  { value: `${Math.min(...isos)}–${Math.max(...isos)}`,     label: 'ISO' },
 ]
 
 const fadeUp = {
@@ -59,33 +47,31 @@ export default function About() {
 
           <motion.p variants={fadeUp}
             className="font-display text-[15px] text-fg2 leading-relaxed max-w-lg mb-5">
-            Ich bin Livio, 21 und wohne im Kanton Zürich. Angefangen hat alles mit dem
-            Licht — mit Sonnenaufgängen, für die ich vor vier aufstehe, und mit
-            Sonnenuntergängen, die ich bis zum letzten Rest Farbe ausreize. Der Seealpsee
-            im Morgendunst, der Fuji über dem Kawaguchiko, die blaue Stunde über Shinjuku:
-            Es ist immer dieselbe Jagd.
+            Ich bin Livio, 21, und wohne im Kanton Zürich. Angefangen hat's mit dem Licht.
+            Für Sonnenaufgänge stehe ich früh auf, und bei Sonnenuntergängen bleibe ich,
+            bis wirklich nichts mehr geht. Der Seealpsee im Morgendunst, der Fuji über dem
+            Kawaguchiko, die blaue Stunde in Shinjuku.
           </motion.p>
 
           <motion.p variants={fadeUp}
             className="font-display text-[15px] text-fg2 leading-relaxed max-w-lg mb-5">
-            Auf ein Thema festlegen wollte ich mich nie. Konzerte, Motorsport, Wildlife,
-            Street, Architektur — was mich interessiert, nehme ich mit. Darum sind es sieben
-            Bereiche geworden statt einer Nische, und zwischen 24 und 400 Millimetern alles,
-            was die Situation gerade verlangt.
+            Auf ein Thema festlegen? Eher nicht. Konzerte, Motorsport, Wildlife, Street,
+            Architektur — was mich interessiert, nehme ich mit. Deshalb sind's sieben
+            Bereiche geworden statt einer Nische.
           </motion.p>
 
           <motion.p variants={fadeUp}
             className="font-display text-[15px] text-fg2 leading-relaxed max-w-lg mb-14">
-            Für Aufträge, Events und längere Projekte erreichbar.
+            Für Aufträge, Events und längere Projekte bin ich erreichbar.
           </motion.p>
 
           {/* Stats */}
           <motion.dl variants={fadeUp}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-14 max-w-lg">
+            className="flex gap-14 mb-14">
             {STATS.map(s => (
               <div key={s.label}>
-                <dt className="font-display text-xl md:text-2xl font-bold text-fg tabular-nums
-                  tracking-tighter whitespace-nowrap">{s.value}</dt>
+                <dt className="font-display text-3xl md:text-4xl font-bold text-fg tabular-nums
+                  tracking-tighter">{s.value}</dt>
                 <dd className="font-mono text-[8px] tracking-[0.18em] text-fg2 uppercase mt-1">
                   {s.label}
                 </dd>
