@@ -66,6 +66,10 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 // ── LIGHTBOX ──────────────────────────────────────────────────
 const lightbox  = document.getElementById('lightbox');
+// 1x1 transparent GIF. <img> requires a src: an empty one resolves to
+// the page URL and refetches the document as an image, and omitting it
+// is invalid HTML. This is inert and costs no request.
+const BLANK_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 const lbImg     = document.getElementById('lbImg');
 const lbCaption = document.getElementById('lbCaption');
 const lbClose   = document.getElementById('lbClose');
@@ -95,7 +99,7 @@ const openLb = (items, idx) => {
 const closeLb = () => {
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(() => { lbImg.removeAttribute('src'); }, 360);
+  setTimeout(() => { lbImg.src = BLANK_PIXEL; }, 360);
 };
 
 const prevLb = () => { lbCurrent = (lbCurrent - 1 + lbItems.length) % lbItems.length; showLb(); };
