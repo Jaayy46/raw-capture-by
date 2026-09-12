@@ -1,0 +1,70 @@
+name: Deploy
+
+# Builds the v4 app and publishes it to GitHub Pages. Pages cannot run a
+# build itself, so the old branch-based source only ever served the repo
+# root (v3). This replaces that.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; queue instead of cancelling, so a run that
+# is mid-publish is allowed to finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: v4/package-lock.json
+
+      - name: Install
+        working-directory: v4
+        run: npm ci
+
+      # prebuild runs scripts/sync-assets.mjs, which copies only the
+      # referenced media out of ../images and ../video and exits non-zero
+      # if any of it is missing — a broken image fails the build rather
+      # than shipping.
+      - name: Build
+        working-directory: v4
+        run: npm run build
+
+      - name: Verify output
+        working-directory: v4
+        run: |
+          test -f dist/index.html || { echo "dist/index.html fehlt"; exit 1; }
+          test -f dist/CNAME     || { echo "CNAME fehlt — Domain ginge verloren"; exit 1; }
+          echo "Grösse: $(du -sh dist | cut -f1), Mediendateien: $(find dist/media -type f | wc -l)"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: v4/dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
