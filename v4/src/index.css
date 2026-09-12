@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── BASE ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  cursor: none;
+  scroll-behavior: smooth;
+  background: #0A0A0B;
+  color: #F0EDE8;
+}
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background: #0A0A0B;
+  color: #F0EDE8;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a, button { cursor: none; }
+
+/* ── GRAIN ────────────────────────────────────────────── */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9998;
+  animation: grain 0.8s steps(3) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(3%, 1%); }
+  30% { transform: translate(-1%, 4%); }
+  40% { transform: translate(4%, -2%); }
+  50% { transform: translate(-3%, 1%); }
+  60% { transform: translate(1%, -4%); }
+  70% { transform: translate(-2%, 3%); }
+  80% { transform: translate(3%, -1%); }
+  90% { transform: translate(-1%, 2%); }
+}
+
+/* ── BLUR-UP IMAGES ───────────────────────────────────── */
+.blur-up {
+  filter: blur(12px);
+  transition: filter 0.5s ease;
+}
+.blur-up.loaded { filter: blur(0); }
+
+/* ── SCROLLBAR ────────────────────────────────────────── */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: #0A0A0B; }
+::-webkit-scrollbar-thumb { background: #2A2A30; border-radius: 1px; }
+
+/* ── MASONRY ──────────────────────────────────────────── */
+.masonry {
+  columns: 3;
+  column-gap: 8px;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 8px;
+}
+@media (max-width: 768px) { .masonry { columns: 2; } }
+@media (max-width: 480px) { .masonry { columns: 1; } }
+
+/* ── MAGNETIC BTN ─────────────────────────────────────── */
+.magnetic { transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+/* ── HERO TEXT ────────────────────────────────────────── */
+.hero-display {
+  font-size: clamp(56px, 10vw, 140px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* ── CAT CARD 3D ──────────────────────────────────────── */
+.cat-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: box-shadow 0.4s ease;
+}
+.cat-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+.cat-card-inner {
+  transition: transform 0.1s ease;
+  transform-style: preserve-3d;
+}
+
+/* ── SECTION HEADING ──────────────────────────────────── */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6B6870;
+}
+
+/* ── VIDEO SCROLL ─────────────────────────────────────── */
+.video-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+.video-scroll::-webkit-scrollbar { display: none; }
+
+/* ── LIGHTBOX ─────────────────────────────────────────── */
+.lb-meta {
+  animation: slideUp 0.5s 0.2s ease both;
+}
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* ── POLAROID SHAKE ──────────────────────────────────── */
+@keyframes polaroidShake {
+  0%   { transform: translate(0,0) rotate(0deg); }
+  15%  { transform: translate(-4px, -6px) rotate(-2deg); }
+  30%  { transform: translate(5px, 4px) rotate(3deg); }
+  45%  { transform: translate(-3px, 7px) rotate(-1deg); }
+  60%  { transform: translate(6px, -3px) rotate(2deg); }
+  75%  { transform: translate(-2px, 5px) rotate(-3deg); }
+  90%  { transform: translate(3px, -4px) rotate(1deg); }
+  100% { transform: translate(0,0) rotate(0deg); }
+}
+.polaroid-shake img {
+  animation: polaroidShake 0.55s ease;
+}
+
+/* ── REDUCED MOTION ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .grain::after { animation: none; }
+}
