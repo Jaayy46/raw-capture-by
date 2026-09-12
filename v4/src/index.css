@@ -6,10 +6,17 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  cursor: none;
   scroll-behavior: smooth;
   background: #0A0A0B;
   color: #F0EDE8;
+}
+
+/* Hide the native cursor only where the custom one is actually
+   rendered. Must match the breakpoint App.jsx mounts it at
+   (`hidden md:block` = 768px) — otherwise a narrow desktop window
+   gets no cursor at all. */
+@media (pointer: fine) and (min-width: 768px) {
+  html, a, button, [data-cursor] { cursor: none; }
 }
 
 body {
@@ -20,8 +27,6 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-
-a, button { cursor: none; }
 
 /* ── GRAIN ────────────────────────────────────────────── */
 .grain::after {
