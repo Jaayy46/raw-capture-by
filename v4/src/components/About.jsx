@@ -47,17 +47,24 @@ export default function About() {
 
           <motion.p variants={fadeUp}
             className="font-display text-[15px] text-fg2 leading-relaxed max-w-lg mb-5">
-            Ich bin Livio, 21, und wohne im Kanton Zürich. Angefangen hat's mit dem Licht.
-            Für Sonnenaufgänge stehe ich früh auf, und bei Sonnenuntergängen bleibe ich,
-            bis wirklich nichts mehr geht. Der Seealpsee im Morgendunst, der Fuji über dem
-            Kawaguchiko, die blaue Stunde in Shinjuku.
+            Ich bin Livio, 21, und wohne im Kanton Zürich. Angefangen hat alles vor etwa
+            vier Jahren, als ich spontan eine Kamera in die Hand gedrückt bekommen habe.
+            Schnell habe ich gemerkt, dass mich das sehr interessiert — und dass es mir
+            vor allem Spass macht, Momente einzufangen und Erinnerungen festzuhalten.
+          </motion.p>
+
+          <motion.p variants={fadeUp}
+            className="font-display text-[15px] text-fg2 leading-relaxed max-w-lg mb-5">
+            Sonnenauf- und -untergänge sind etwas vom Schönsten überhaupt. Darum gebe ich
+            mir Mühe, mich auch mal früh aus dem Bett zu holen, damit ich die Morgenstunden
+            nicht verpasse. Der Seealpsee im Morgendunst, der Mt. Fuji im Morgenlicht, die
+            blaue Stunde in Shinjuku.
           </motion.p>
 
           <motion.p variants={fadeUp}
             className="font-display text-[15px] text-fg2 leading-relaxed max-w-lg mb-5">
             Auf ein Thema festlegen? Eher nicht. Konzerte, Motorsport, Wildlife, Street,
-            Architektur — was mich interessiert, nehme ich mit. Deshalb sind's sieben
-            Bereiche geworden statt einer Nische.
+            Architektur — was mich interessiert, nehme ich mit.
           </motion.p>
 
           <motion.p variants={fadeUp}
