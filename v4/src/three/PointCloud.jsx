@@ -12,7 +12,7 @@ import * as THREE from 'three'
 
 const SRC = '/media/hero/A7_06806.webp'   // Seealpsee
 const WORLD_W = 9      // image width in world units
-const DEPTH = 3.8     // relief amplitude, world units
+const DEPTH = 5.0     // relief amplitude, world units
 const RELEASE_FROM = 0.14   // scroll point where the cloud lets go
 const RELEASE_TO   = 0.50   // done before the sticky frame unpins
 
