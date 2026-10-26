@@ -37,13 +37,19 @@ function buildGeometry(img, step) {
 
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
-      // Dissolve the frame: the closer to the border, the less likely a
-      // point survives. Corners go first, so the silhouette reads as
-      // torn rather than trimmed.
-      const nx = Math.abs((x / w) * 2 - 1)
-      const ny = Math.abs((y / h) * 2 - 1)
-      const edge = Math.max(nx, ny) * 0.75 + Math.hypot(nx, ny) * 0.35
-      if (Math.random() > 1 - smooth(0.86, 1.22, edge)) continue
+      // No frame at all. A rectangular falloff still reads as a box,
+      // however ragged its edge, so the mask is radial and wobbled —
+      // the silhouette has no straight run anywhere, and the density
+      // thins out over a long distance rather than stopping.
+      const nx = (x / w) * 2 - 1
+      const ny = (y / h) * 2 - 1
+      const ang = Math.atan2(ny, nx)
+      const wobble = 0.80
+        + 0.20 * Math.sin(ang * 3 + 1.3)
+        + 0.11 * Math.sin(ang * 7 - 0.6)
+        + 0.06 * Math.sin(ang * 13 + 2.1)
+      const dist = Math.hypot(nx, ny * 0.92) / wobble
+      if (Math.random() > 1 - smooth(0.46, 1.12, dist)) continue
 
       const p = (y * w + x) * 4
       const r = data[p] / 255, g = data[p + 1] / 255, b = data[p + 2] / 255
@@ -55,16 +61,16 @@ function buildGeometry(img, step) {
 
       // Break the sampling grid — a perfect lattice reads as a screen
       // door, not a cloud.
-      const jx = (Math.random() - 0.5) * scale * 1.3
-      const jy = (Math.random() - 0.5) * scale * 1.3
-      const jz = (Math.random() - 0.5) * 0.18
+      const jx = (Math.random() - 0.5) * scale * 2.1
+      const jy = (Math.random() - 0.5) * scale * 2.1
+      const jz = (Math.random() - 0.5) * 0.4
 
       // A few per cent drift free of the picture entirely, like embers
       // off a fire.
-      const stray = Math.random() < 0.012
-      const sx = stray ? (Math.random() - 0.5) * 2.6 : 0
-      const sy = stray ? (Math.random() - 0.5) * 2.0 : 0
-      const sz = stray ? (Math.random() - 0.5) * 2.0 : 0
+      const stray = Math.random() < 0.05
+      const sx = stray ? (Math.random() - 0.5) * 5.5 : 0
+      const sy = stray ? (Math.random() - 0.5) * 4.2 : 0
+      const sz = stray ? (Math.random() - 0.5) * 3.0 : 0
 
       target.push(
         (x - w / 2) * scale + jx + sx,
