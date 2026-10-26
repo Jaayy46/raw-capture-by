@@ -50,7 +50,7 @@ function buildGeometry(img, step) {
         + 0.11 * Math.sin(ang * 7 - 0.6)
         + 0.06 * Math.sin(ang * 13 + 2.1)
       const dist = Math.hypot(nx, ny * 0.92) / wobble
-      if (Math.random() > 1 - smooth(0.46, 1.12, dist)) continue
+      if (Math.random() > 1 - smooth(0.58, 1.14, dist)) continue
 
       const p = (y * w + x) * 4
       const r = data[p] / 255, g = data[p + 1] / 255, b = data[p + 2] / 255
@@ -62,9 +62,9 @@ function buildGeometry(img, step) {
 
       // Break the sampling grid — a perfect lattice reads as a screen
       // door, not a cloud.
-      const jx = (Math.random() - 0.5) * scale * 2.1
-      const jy = (Math.random() - 0.5) * scale * 2.1
-      const jz = (Math.random() - 0.5) * 0.55
+      const jx = (Math.random() - 0.5) * scale * 0.75
+      const jy = (Math.random() - 0.5) * scale * 0.75
+      const jz = (Math.random() - 0.5) * 0.22
 
       // A few per cent drift free of the picture entirely, like embers
       // off a fire.
@@ -98,7 +98,7 @@ function buildGeometry(img, step) {
 
       rand.push(Math.random())
       // Uneven grain: strays and a scatter of others sit larger
-      psize.push(stray ? 1.6 + Math.random() * 0.9 : 0.6 + Math.random() * 0.9)
+      psize.push(stray ? 1.8 + Math.random() * 1.0 : 0.8 + Math.random() * 0.5)
     }
   }
 
@@ -164,7 +164,7 @@ const FRAG = /* glsl */`
     vec2 c = gl_PointCoord - 0.5;
     float d2 = dot(c, c);
     if (d2 > 0.25) discard;
-    float a = smoothstep(0.25, 0.04, d2);
+    float a = smoothstep(0.25, 0.11, d2);
 
     // Aerial perspective: points further into the scene wash out
     // toward the page and dim. This is what makes the relief read as
@@ -205,7 +205,7 @@ function Cloud({ scrollProg, reduced, step, small }) {
   const uniforms = useMemo(() => ({
     uProgress:   { value: 0 },
     uTime:       { value: 0 },
-    uSize:       { value: small ? 2.0 : 2.4 },
+    uSize:       { value: small ? 2.0 : 2.3 },
     uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
     uFogColor:   { value: new THREE.Color('#0A0A0B') },
     uFogNear:    { value: 5.6 },
@@ -228,16 +228,19 @@ function Cloud({ scrollProg, reduced, step, small }) {
 
     if (reduced) return
 
-    // A relief seen head-on still reads flat, so the cloud is never
-    // square to camera: it turns slowly on its own and the pointer
-    // only adds to that.
+    // Depth and sharpness pull against each other: a deep relief seen
+    // at an angle projects its near and far faces onto each other and
+    // the picture smears. So the resting pose is nearly square to
+    // camera — where a height field projects back to the original
+    // image — and the turn that shows the volume comes from the
+    // pointer, with only a slight drift when nobody is there.
     const o = points.current
     const t = state.clock.elapsedTime
-    const yaw   = Math.sin(t * 0.13) * 0.30 + mouse.current.x * 0.30
-    const pitch = Math.sin(t * 0.09) * 0.07 - 0.06 - mouse.current.y * 0.16
+    const yaw   = Math.sin(t * 0.13) * 0.07 + mouse.current.x * 0.34
+    const pitch = Math.sin(t * 0.09) * 0.03 - 0.02 - mouse.current.y * 0.18
     o.rotation.y += (yaw   - o.rotation.y) * 0.03
     o.rotation.x += (pitch - o.rotation.x) * 0.03
-    o.rotation.z = Math.sin(t * 0.07) * 0.02
+    o.rotation.z = Math.sin(t * 0.07) * 0.012
   })
 
   if (!built) return null
@@ -273,7 +276,7 @@ function Cloud({ scrollProg, reduced, step, small }) {
 export default function PointCloud({ scrollProg, reduced, small }) {
   // Coarser sampling on phones: step 3 over a 1200px source is ~107k
   // points, step 5 is ~38k.
-  const step = small ? 4 : 3
+  const step = small ? 3 : 2
 
   return (
     <Canvas
