@@ -12,7 +12,8 @@ import * as THREE from 'three'
 
 const SRC = '/media/hero/A7_06806.webp'   // Seealpsee
 const WORLD_W = 9      // image width in world units
-const HANDOFF = 0.30   // matches Hero's handover point
+const RELEASE_FROM = 0.14   // scroll point where the cloud lets go
+const RELEASE_TO   = 0.50   // done before the sticky frame unpins
 
 /* ── Sample the image into point attributes ─────────────── */
 function buildGeometry(img, step) {
@@ -23,18 +24,27 @@ function buildGeometry(img, step) {
   ctx.drawImage(img, 0, 0, w, h)
   const { data } = ctx.getImageData(0, 0, w, h)
 
-  const count   = w * h
-  const target  = new Float32Array(count * 3)
-  const scatter = new Float32Array(count * 3)
-  const color   = new Float32Array(count * 3)
-  const rand    = new Float32Array(count)
+  // Grown, not preallocated: points get culled along the border so the
+  // cloud ends in a ragged edge rather than a cut rectangle.
+  const target = [], scatter = [], color = [], rand = [], psize = []
 
   const scale  = WORLD_W / w
   const worldH = h * scale
-  let i = 0
+  const smooth = (a, b, x) => {
+    const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
+    return t * t * (3 - 2 * t)
+  }
 
   for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++, i++) {
+    for (let x = 0; x < w; x++) {
+      // Dissolve the frame: the closer to the border, the less likely a
+      // point survives. Corners go first, so the silhouette reads as
+      // torn rather than trimmed.
+      const nx = Math.abs((x / w) * 2 - 1)
+      const ny = Math.abs((y / h) * 2 - 1)
+      const edge = Math.max(nx, ny) * 0.75 + Math.hypot(nx, ny) * 0.35
+      if (Math.random() > 1 - smooth(0.86, 1.22, edge)) continue
+
       const p = (y * w + x) * 4
       const r = data[p] / 255, g = data[p + 1] / 255, b = data[p + 2] / 255
 
@@ -43,34 +53,56 @@ function buildGeometry(img, step) {
       // and the dark foreground come forward.
       const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
 
-      const i3 = i * 3
-      target[i3]     = (x - w / 2) * scale
-      target[i3 + 1] = (h / 2 - y) * scale
-      target[i3 + 2] = (0.5 - lum) * 2.1
+      // Break the sampling grid — a perfect lattice reads as a screen
+      // door, not a cloud.
+      const jx = (Math.random() - 0.5) * scale * 1.3
+      const jy = (Math.random() - 0.5) * scale * 1.3
+      const jz = (Math.random() - 0.5) * 0.18
+
+      // A few per cent drift free of the picture entirely, like embers
+      // off a fire.
+      const stray = Math.random() < 0.012
+      const sx = stray ? (Math.random() - 0.5) * 2.6 : 0
+      const sy = stray ? (Math.random() - 0.5) * 2.0 : 0
+      const sz = stray ? (Math.random() - 0.5) * 2.0 : 0
+
+      target.push(
+        (x - w / 2) * scale + jx + sx,
+        (h / 2 - y) * scale + jy + sy,
+        (0.5 - lum) * 2.1 + jz + sz,
+      )
 
       // Start somewhere in a loose shell around the final shape
       const a = Math.random() * Math.PI * 2
       const rad = 5 + Math.random() * 9
-      scatter[i3]     = Math.cos(a) * rad
-      scatter[i3 + 1] = (Math.random() - 0.5) * worldH * 2.4
-      scatter[i3 + 2] = Math.sin(a) * rad - 4
+      scatter.push(
+        Math.cos(a) * rad,
+        (Math.random() - 0.5) * worldH * 2.4,
+        Math.sin(a) * rad - 4,
+      )
 
       // Lift the darks a little, or the shadows vanish against the page
       const lift = 0.22
-      color[i3]     = r * (1 - lift) + lift * 0.5
-      color[i3 + 1] = g * (1 - lift) + lift * 0.5
-      color[i3 + 2] = b * (1 - lift) + lift * 0.55
+      color.push(
+        r * (1 - lift) + lift * 0.5,
+        g * (1 - lift) + lift * 0.5,
+        b * (1 - lift) + lift * 0.55,
+      )
 
-      rand[i] = Math.random()
+      rand.push(Math.random())
+      // Uneven grain: strays and a scatter of others sit larger
+      psize.push(stray ? 1.6 + Math.random() * 0.9 : 0.6 + Math.random() * 0.9)
     }
   }
 
+  const count = rand.length
   const geo = new THREE.BufferGeometry()
-  geo.setAttribute('position', new THREE.BufferAttribute(target, 3))
-  geo.setAttribute('aTarget',  new THREE.BufferAttribute(target, 3))
-  geo.setAttribute('aScatter', new THREE.BufferAttribute(scatter, 3))
-  geo.setAttribute('color',    new THREE.BufferAttribute(color, 3))
-  geo.setAttribute('aRand',    new THREE.BufferAttribute(rand, 1))
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(target, 3))
+  geo.setAttribute('aTarget',  new THREE.Float32BufferAttribute(target, 3))
+  geo.setAttribute('aScatter', new THREE.Float32BufferAttribute(scatter, 3))
+  geo.setAttribute('color',    new THREE.Float32BufferAttribute(color, 3))
+  geo.setAttribute('aRand',    new THREE.Float32BufferAttribute(rand, 1))
+  geo.setAttribute('aSize',    new THREE.Float32BufferAttribute(psize, 1))
   geo.computeBoundingSphere()
   return { geo, count, worldH, aspect: h / w }
 }
@@ -79,6 +111,7 @@ const VERT = /* glsl */`
   attribute vec3  aTarget;
   attribute vec3  aScatter;
   attribute float aRand;
+  attribute float aSize;
   uniform float uProgress;   // 0 scattered -> 1 gathered
   uniform float uTime;
   uniform float uSize;
@@ -101,8 +134,8 @@ const VERT = /* glsl */`
     gl_Position = projectionMatrix * mv;
 
     // Perspective attenuation, clamped so near points do not blow up
-    gl_PointSize = uSize * uPixelRatio * (9.0 / max(-mv.z, 0.6));
-    gl_PointSize = clamp(gl_PointSize, 1.0, 6.0);
+    gl_PointSize = uSize * aSize * uPixelRatio * (9.0 / max(-mv.z, 0.6));
+    gl_PointSize = clamp(gl_PointSize, 1.0, 10.0);
 
     vColor = color;
     vFade  = t;
@@ -125,7 +158,7 @@ const FRAG = /* glsl */`
   }
 `
 
-function Cloud({ scrollProg, reduced, step, active, small }) {
+function Cloud({ scrollProg, reduced, step, small }) {
   const points = useRef()
   const matRef = useRef()
   const [built, setBuilt] = useState(null)
@@ -153,21 +186,21 @@ function Cloud({ scrollProg, reduced, step, active, small }) {
   const uniforms = useMemo(() => ({
     uProgress:   { value: 0 },
     uTime:       { value: 0 },
-    uSize:       { value: small ? 1.5 : 1.9 },
+    uSize:       { value: small ? 2.0 : 2.4 },
     uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
   }), [])
 
   const entry = useRef(0)
 
   useFrame((state, dt) => {
-    if (!points.current || !active) return
+    if (!points.current) return
     const sp = scrollProg.current
 
     // Gathering is an ARRIVAL, not a scroll reward: the cloud pulls
     // itself into the photograph on its own over the first couple of
     // seconds. Scrolling only ever lets it go again.
     entry.current = Math.min(1, entry.current + dt / 2.2)
-    const release = THREE.MathUtils.smoothstep(sp, 0.16, HANDOFF)
+    const release = THREE.MathUtils.smoothstep(sp, RELEASE_FROM, RELEASE_TO)
     uniforms.uProgress.value = entry.current * (1 - release)
     uniforms.uTime.value += dt
 
@@ -195,7 +228,7 @@ function Cloud({ scrollProg, reduced, step, active, small }) {
 
   return (
     <points ref={points} geometry={built.geo} scale={fit}
-      position={[0, viewport.height * 0.08, 0]} visible={active}>
+      position={[0, viewport.height * 0.08, 0]}>
       <shaderMaterial
         ref={matRef}
         vertexShader={VERT}
@@ -210,23 +243,18 @@ function Cloud({ scrollProg, reduced, step, active, small }) {
   )
 }
 
-export default function PointCloud({ scrollProg, reduced, small, active }) {
+export default function PointCloud({ scrollProg, reduced, small }) {
   // Coarser sampling on phones: step 3 over a 1200px source is ~107k
   // points, step 5 is ~38k.
   const step = small ? 4 : 3
 
   return (
     <Canvas
-      // frameloop stays constant. Toggling it to "never" and back does
-      // not reliably restart r3f's loop, so the scene is idled by
-      // hiding the points and skipping the frame work instead — the
-      // geometry survives, so scrolling back up costs nothing.
-      frameloop="always"
       dpr={small ? [1, 1.5] : [1, 2]}
       camera={{ fov: 50, position: [0, 0, 7.5], near: 0.1, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
-      <Cloud scrollProg={scrollProg} reduced={reduced} step={step} active={active} small={small} />
+      <Cloud scrollProg={scrollProg} reduced={reduced} step={step} small={small} />
     </Canvas>
   )
 }

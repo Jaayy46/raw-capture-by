@@ -2,21 +2,13 @@ import { lazy, Suspense, useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { SITE } from '../../data/site.js'
 
-/* The hero runs in two acts.
-
-   Act 1 — a photograph reassembled as a cloud of points, depth taken
-   from the brightness of each pixel. It gathers as you arrive, holds,
-   then lets go.
-   Act 2 — the camera flight through the corridor of frames.
-
-   Both are lazy and only one renders at a time: the inactive canvas is
-   parked with frameloop="never", so the GPU never pays for both. */
+/* The landing is one image rebuilt as a cloud of points, each taking
+   its depth from the brightness of the pixel it came from. It gathers
+   on arrival, holds, and scatters as you scroll — the name resolving
+   out of it as it goes. */
 const PointCloud = lazy(() => import('../../three/PointCloud.jsx'))
-const Corridor   = lazy(() => import('../../three/Corridor.jsx'))
 
-const HANDOVER = 0.30   // scroll progress where act 1 gives way to act 2
-
-// Phones get a lighter scene. Checks the SHORT edge plus pointer type,
+// Phones get a lighter cloud. Checks the SHORT edge plus pointer type,
 // so a handset in landscape is not mistaken for a desktop.
 const isSmall = () => typeof window !== 'undefined' && (
   Math.min(window.innerWidth, window.innerHeight) < 640 ||
@@ -32,10 +24,6 @@ export default function Hero() {
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 
-  // Which act is live. Kept in state (not just a ref) because the
-  // canvases need to re-render to flip their frameloop.
-  const [act, setAct] = useState(1)
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
@@ -43,23 +31,19 @@ export default function Hero() {
 
   useEffect(() => scrollYProgress.on('change', v => {
     // A bad measurement can hand us NaN; treat anything non-finite as
-    // "still at the top" rather than letting it park act 1.
-    const p = Number.isFinite(v) ? v : 0
-    scrollProg.current = p
-    const next = p < HANDOVER ? 1 : 2
-    setAct(prev => (prev === next ? prev : next))
+    // "still at the top".
+    scrollProg.current = Number.isFinite(v) ? v : 0
   }), [scrollYProgress])
 
-  // Act 1 copy
-  const introOp = useTransform(scrollYProgress, [0,    0.13], [1, 0])
-  const introY  = useTransform(scrollYProgress, [0,    0.13], ['0px', '-28px'])
-  // Crossfade between the two canvases
-  const cloudOp = useTransform(scrollYProgress, [0.20, HANDOVER], [1, 0])
-  const corrOp  = useTransform(scrollYProgress, [0.24, 0.38],     [0, 1])
-  // Act 2 copy
-  const nameOp   = useTransform(scrollYProgress, [0.62, 0.86], [0, 1])
-  const nameY    = useTransform(scrollYProgress, [0.62, 0.86], ['40px', '0px'])
-  const nameBlur = useTransform(scrollYProgress, [0.62, 0.86], ['blur(14px)', 'blur(0px)'])
+  /* The sticky frame only stays pinned while progress < (H - vh) / H,
+     which is ~0.62 for a 260svh section. Everything has to resolve
+     before that or it plays after the stage has already left. */
+  const introOp  = useTransform(scrollYProgress, [0,    0.16], [1, 0])
+  const introY   = useTransform(scrollYProgress, [0,    0.16], ['0px', '-30px'])
+  const nameOp   = useTransform(scrollYProgress, [0.26, 0.48], [0, 1])
+  const nameY    = useTransform(scrollYProgress, [0.26, 0.48], ['36px', '0px'])
+  const nameBlur = useTransform(scrollYProgress, [0.26, 0.48], ['blur(14px)', 'blur(0px)'])
+  const cloudOp  = useTransform(scrollYProgress, [0.50, 0.62], [1, 0])
   const barW     = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
   return (
@@ -68,7 +52,7 @@ export default function Hero() {
     <section
       ref={containerRef}
       id="work"
-      className="relative h-[460svh]"
+      className="relative h-[260svh]"
       // Inline, not just the Tailwind class: Vite injects CSS through
       // JS, so on the first measure the element can still be static and
       // framer-motion then reports a bogus scroll progress.
@@ -77,24 +61,8 @@ export default function Hero() {
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-bg">
 
         <Suspense fallback={null}>
-          {/* Act 1 — the photograph as a point cloud */}
           <motion.div className="absolute inset-0 z-10" style={{ opacity: cloudOp }}>
-            <PointCloud
-              scrollProg={scrollProg}
-              reduced={reduced}
-              small={small}
-              active={act === 1}
-            />
-          </motion.div>
-
-          {/* Act 2 — the corridor flight */}
-          <motion.div className="absolute inset-0 z-10" style={{ opacity: corrOp }}>
-            <Corridor
-              scrollProg={scrollProg}
-              reduced={reduced}
-              small={small}
-              active={act === 2}
-            />
+            <PointCloud scrollProg={scrollProg} reduced={reduced} small={small} />
           </motion.div>
         </Suspense>
 
@@ -123,7 +91,7 @@ export default function Hero() {
           </p>
         </motion.div>
 
-        {/* Name — resolves at the end of the corridor */}
+        {/* Name — resolves as the cloud lets go */}
         <motion.div
           style={{ opacity: nameOp, y: nameY, filter: nameBlur }}
           className="absolute inset-0 z-30 flex flex-col items-center justify-center
