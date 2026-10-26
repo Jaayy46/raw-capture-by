@@ -84,7 +84,7 @@ const FRAG = /* glsl */`
   }
 `
 
-function PhotoPlane({ item, texture, aberration }) {
+function PhotoPlane({ item, texture, aberration, active }) {
   const mesh = useRef()
 
   const uniforms = useMemo(() => {
@@ -106,7 +106,7 @@ function PhotoPlane({ item, texture, aberration }) {
   }, [texture, aberration, item.size])
 
   useFrame((state) => {
-    if (!mesh.current) return
+    if (!mesh.current || !active) return
     const t = state.clock.elapsedTime
     mesh.current.position.y = item.pos[1] + Math.sin(t * 0.35 + item.phase) * 0.07
     mesh.current.rotation.z = item.rotZ + Math.sin(t * 0.22 + item.phase) * 0.010
@@ -114,7 +114,7 @@ function PhotoPlane({ item, texture, aberration }) {
   })
 
   return (
-    <mesh ref={mesh} position={item.pos} rotation={[0, item.rotY, item.rotZ]}>
+    <mesh ref={mesh} position={item.pos} rotation={[0, item.rotY, item.rotZ]} visible={active}>
       <planeGeometry args={item.size} />
       <shaderMaterial
         vertexShader={VERT}
@@ -128,7 +128,7 @@ function PhotoPlane({ item, texture, aberration }) {
   )
 }
 
-function Rig({ scrollProg, reduced }) {
+function Rig({ scrollProg, reduced, active }) {
   const { camera } = useThree()
   const target = useRef({ x: 0, y: 0 })
 
@@ -142,6 +142,7 @@ function Rig({ scrollProg, reduced }) {
   }, [])
 
   useFrame(() => {
+    if (!active) return
     const sp = scrollProg.current
     const zTarget = 1.5 - sp * 42
 
@@ -167,7 +168,7 @@ function Rig({ scrollProg, reduced }) {
   return null
 }
 
-function Scene({ layout, scrollProg, reduced, aberration }) {
+function Scene({ layout, scrollProg, reduced, aberration, active }) {
   const textures = useTexture(layout.map(l => l.url))
 
   useMemo(() => {
@@ -184,19 +185,23 @@ function Scene({ layout, scrollProg, reduced, aberration }) {
 
   return (
     <>
-      <Rig scrollProg={scrollProg} reduced={reduced} />
+      <Rig scrollProg={scrollProg} reduced={reduced} active={active} />
       {layout.map((item, i) => (
-        <PhotoPlane key={item.file} item={item} texture={textures[i]} aberration={aberration} />
+        <PhotoPlane key={item.file} item={item} texture={textures[i]} aberration={aberration} active={active} />
       ))}
     </>
   )
 }
 
-export default function Corridor({ scrollProg, reduced, small }) {
+export default function Corridor({ scrollProg, reduced, small, active = true }) {
   const layout = useMemo(() => buildCorridor({ small }), [small])
 
   return (
     <Canvas
+      // Constant on purpose — see PointCloud.jsx: flipping frameloop at
+      // runtime can leave r3f's loop stopped. The scene idles by going
+      // invisible and skipping its frame work instead.
+      frameloop="always"
       // Cap DPR on phones — a 3x retina buffer of this scene is a lot
       // of fill rate for no visible gain at this size.
       dpr={small ? [1, 1.5] : [1, 2]}
@@ -210,6 +215,7 @@ export default function Corridor({ scrollProg, reduced, small }) {
           scrollProg={scrollProg}
           reduced={reduced}
           aberration={small ? 0 : 0.022}
+          active={active}
         />
       </Suspense>
     </Canvas>
