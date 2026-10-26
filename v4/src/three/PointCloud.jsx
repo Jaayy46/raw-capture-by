@@ -12,6 +12,7 @@ import * as THREE from 'three'
 
 const SRC = '/media/hero/A7_06806.webp'   // Seealpsee
 const WORLD_W = 9      // image width in world units
+const DEPTH = 3.8     // relief amplitude, world units
 const RELEASE_FROM = 0.14   // scroll point where the cloud lets go
 const RELEASE_TO   = 0.50   // done before the sticky frame unpins
 
@@ -63,7 +64,7 @@ function buildGeometry(img, step) {
       // door, not a cloud.
       const jx = (Math.random() - 0.5) * scale * 2.1
       const jy = (Math.random() - 0.5) * scale * 2.1
-      const jz = (Math.random() - 0.5) * 0.4
+      const jz = (Math.random() - 0.5) * 0.55
 
       // A few per cent drift free of the picture entirely, like embers
       // off a fire.
@@ -75,7 +76,7 @@ function buildGeometry(img, step) {
       target.push(
         (x - w / 2) * scale + jx + sx,
         (h / 2 - y) * scale + jy + sy,
-        (0.5 - lum) * 2.1 + jz + sz,
+        (0.5 - lum) * DEPTH + jz + sz,
       )
 
       // Start somewhere in a loose shell around the final shape
@@ -124,6 +125,7 @@ const VERT = /* glsl */`
   uniform float uPixelRatio;
   varying vec3  vColor;
   varying float vFade;
+  varying float vDepth;
 
   void main() {
     // Stagger per point so the image assembles rather than snapping
@@ -145,12 +147,17 @@ const VERT = /* glsl */`
 
     vColor = color;
     vFade  = t;
+    vDepth = -mv.z;
   }
 `
 
 const FRAG = /* glsl */`
+  uniform vec3  uFogColor;
+  uniform float uFogNear;
+  uniform float uFogFar;
   varying vec3  vColor;
   varying float vFade;
+  varying float vDepth;
 
   void main() {
     // Round, soft-edged points — square ones read as noise
@@ -159,8 +166,14 @@ const FRAG = /* glsl */`
     if (d2 > 0.25) discard;
     float a = smoothstep(0.25, 0.04, d2);
 
+    // Aerial perspective: points further into the scene wash out
+    // toward the page and dim. This is what makes the relief read as
+    // a volume rather than a flat field of dots.
+    float fog = smoothstep(uFogNear, uFogFar, vDepth);
+    vec3 col = mix(vColor, uFogColor, fog * 0.62);
+
     // Scattered points stay dim; they firm up as they find their place
-    gl_FragColor = vec4(vColor, a * (0.12 + vFade * 0.88));
+    gl_FragColor = vec4(col, a * (0.12 + vFade * 0.88) * (1.0 - fog * 0.40));
   }
 `
 
@@ -194,6 +207,9 @@ function Cloud({ scrollProg, reduced, step, small }) {
     uTime:       { value: 0 },
     uSize:       { value: small ? 2.0 : 2.4 },
     uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+    uFogColor:   { value: new THREE.Color('#0A0A0B') },
+    uFogNear:    { value: 5.6 },
+    uFogFar:     { value: 11.5 },
   }), [])
 
   const entry = useRef(0)
@@ -212,11 +228,16 @@ function Cloud({ scrollProg, reduced, step, small }) {
 
     if (reduced) return
 
-    // The cloud turns gently and leans toward the pointer
+    // A relief seen head-on still reads flat, so the cloud is never
+    // square to camera: it turns slowly on its own and the pointer
+    // only adds to that.
     const o = points.current
-    o.rotation.y += ((mouse.current.x * 0.20) - o.rotation.y) * 0.03
-    o.rotation.x += ((-mouse.current.y * 0.12) - o.rotation.x) * 0.03
-    o.rotation.z = Math.sin(state.clock.elapsedTime * 0.08) * 0.015
+    const t = state.clock.elapsedTime
+    const yaw   = Math.sin(t * 0.13) * 0.30 + mouse.current.x * 0.30
+    const pitch = Math.sin(t * 0.09) * 0.07 - 0.06 - mouse.current.y * 0.16
+    o.rotation.y += (yaw   - o.rotation.y) * 0.03
+    o.rotation.x += (pitch - o.rotation.x) * 0.03
+    o.rotation.z = Math.sin(t * 0.07) * 0.02
   })
 
   if (!built) return null
