@@ -14,6 +14,11 @@ export const SITE = {
   camera:    'Sony A7 IV',
 }
 
+/* Das Bild auf der Startseite. Der Wert ist der `file`-Name aus
+   photos.js — also der Dateiname in images/gallery/, kleingeschrieben
+   und mit Bindestrichen. */
+export const HERO_IMAGE = 'seealpsee-appenzell'
+
 export const NAV = [
   { label: 'Arbeiten',   id: 'arbeiten' },
   { label: 'Film',       id: 'film' },

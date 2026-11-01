@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { CATEGORIES } from '../data/photos.js'
-import { SITE } from '../data/site.js'
+import { SITE, HERO_IMAGE } from '../data/site.js'
 
 /* The most characteristic thing in a photographer's world is a
    photograph, shown properly. So: one frame, uncropped by text, with
@@ -8,7 +8,8 @@ import { SITE } from '../data/site.js'
    and labelled. The whole page-load arrival happens here and nowhere
    else. */
 
-const open = CATEGORIES.find(c => c.id === 'landschaft').photos[0]   // Seealpsee
+const ALL = CATEGORIES.flatMap(c => c.photos)
+const open = ALL.find(p => p.file === HERO_IMAGE) ?? ALL[0]
 
 const rise = {
   hidden: { opacity: 0, y: 18 },

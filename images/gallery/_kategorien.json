@@ -1,0 +1,37 @@
+[
+  {
+    "id": "landschaft",
+    "label": "Landschaft",
+    "desc": "Berge, Seen und Licht — Schweiz und Japan."
+  },
+  {
+    "id": "street",
+    "label": "Street",
+    "desc": "Tokyo, Osaka, Kyoto — Nächte und Gassen."
+  },
+  {
+    "id": "konzerte",
+    "label": "Konzerte",
+    "desc": "Bühnenlicht, Silhouetten, Energie."
+  },
+  {
+    "id": "sport",
+    "label": "Sport",
+    "desc": "Klettern, Wandern, Gegenlicht."
+  },
+  {
+    "id": "motorsport",
+    "label": "Motorsport",
+    "desc": "F1, GT3 und JDM-Kultur."
+  },
+  {
+    "id": "wildlife",
+    "label": "Wildlife",
+    "desc": "Makaken in Arashiyama, Rotwild im Herbst."
+  },
+  {
+    "id": "architektur",
+    "label": "Architektur",
+    "desc": "Torii, Burgen und Linien."
+  }
+]
