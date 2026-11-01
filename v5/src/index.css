@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: #E7E8E4;
+  color: #191B19;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  font-variation-settings: 'wdth' 100;
+  background: #E7E8E4;
+  color: #191B19;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── DISPLAY ──────────────────────────────────────────────
+   One family doing two very different jobs: the width axis
+   pushed wide and set tight for headings, normal width for
+   reading. Lowercase throughout — the tracked-out capital
+   label is the tell this page is built to avoid. */
+.display {
+  font-variation-settings: 'wdth' 118;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.94;
+}
+.display-xl { font-size: clamp(2.75rem, 7.5vw, 6.5rem); }
+.display-l  { font-size: clamp(2rem, 4.6vw, 3.5rem); }
+.display-m  { font-size: clamp(1.5rem, 2.6vw, 2rem); }
+
+.lede {
+  font-size: clamp(1.0625rem, 1.5vw, 1.3125rem);
+  line-height: 1.5;
+  color: #5C615C;
+  max-width: 48ch;
+}
+
+/* ── FOCUS ────────────────────────────────────────────────
+   Visible on keyboard only, never swallowed. */
+:focus-visible {
+  outline: 2px solid #191B19;
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ── SKIP LINK ────────────────────────────────────────── */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: #191B19;
+  color: #E7E8E4;
+  padding: 0.75rem 1.25rem;
+  z-index: 100;
+}
+.skip:focus { left: 0; }
+
+/* ── IMAGES ───────────────────────────────────────────────
+   Deterrents only; the real protection is upstream, in the
+   watermarked screen-sized derivatives the site serves. */
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── MASONRY ────────────────────────────────────────────── */
+.masonry { columns: 3; column-gap: 1rem; }
+.masonry > * { break-inside: avoid; margin-bottom: 1rem; }
+@media (max-width: 900px) { .masonry { columns: 2; } }
+@media (max-width: 560px) { .masonry { columns: 1; } }
+
+/* ── SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #DDDED9; }
+::-webkit-scrollbar-thumb { background: #C6C8C2; }
+
+::selection { background: #191B19; color: #E7E8E4; }
+
+/* ── MOTION ───────────────────────────────────────────────
+   One orchestrated arrival on load, and transitions that
+   answer a click. Nothing animates just because it scrolled
+   into view. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
