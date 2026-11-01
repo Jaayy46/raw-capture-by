@@ -51,8 +51,16 @@ def font(size):
 
 
 def slug(text):
-    """Dateiname → URL-tauglicher Name. Umlaute werden umschrieben."""
+    """Dateiname → URL-tauglicher Name. Umlaute werden umschrieben.
+
+    Erst nach NFC zusammenziehen: macOS legt Dateinamen zerlegt ab
+    ("a" + Trema statt "ä"), sonst greift das Ersetzen nicht und der
+    Umlaut fiele beim ASCII-Schritt ersatzlos weg — aus "Säntis"
+    würde "santis" statt "saentis".
+    """
+    text = unicodedata.normalize("NFC", text)
     t = text.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+    t = t.replace("Ä", "Ae").replace("Ö", "Oe").replace("Ü", "Ue")
     t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode()
     t = re.sub(r"[^a-zA-Z0-9]+", "-", t).strip("-").lower()
     return t or "bild"
@@ -179,8 +187,19 @@ def main():
 
     PHOTOS.write_text("\n".join(lines), encoding="utf-8")
 
+    # Wird ein Bild umbenannt oder entfernt, bleibt sonst seine alte
+    # Fassung liegen und wird weiter ausgeliefert.
+    keep = seen | {"portrait-livio"}
+    stale = 0
+    for sub in ("full", "thumb"):
+        for f in (WEB / sub).glob("*.webp"):
+            if f.stem not in keep:
+                f.unlink(); stale += 1
+
     print(f"{total} Bilder in {len(cats) - len(empty)} Kategorien → photos.js")
     print(f"Ausgeliefert: images/web/full ({FULL_EDGE}px) und thumb ({THUMB_EDGE}px), mit Wasserzeichen")
+    if stale:
+        print(f"{stale} veraltete Fassungen entfernt")
     if empty:
         print(f"Leer oder nicht vorhanden: {', '.join(empty)}")
     if not total:

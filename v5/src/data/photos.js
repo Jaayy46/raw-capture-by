@@ -9,6 +9,9 @@ export const CATEGORIES = [
       { file: "fuji-chureito-pagode", caption: "Fuji · Chureito-Pagode", w: 2000, h: 1333, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "29.8mm", aperture: "f/7.1", shutter: "1/250s", iso: "2000" },
       { file: "fuji-san-sonnenuntergang", caption: "Fuji-san · Sonnenuntergang", w: 2000, h: 1333, camera: "Sony A7 IV", lens: "Sony FE 100-400mm GM", focal: "100mm", aperture: "f/6.3", shutter: "1/250s", iso: "1000" },
       { file: "kawaguchiko-fuji", caption: "Kawaguchiko · Fuji", w: 2000, h: 1333, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "37mm", aperture: "f/7.1", shutter: "1/320s", iso: "640" },
+      { file: "nationalpark-morgenstimmung", caption: "Nationalpark - Morgenstimmung", w: 7008, h: 4672, camera: "Sony A7 IV", lens: "Sony FE 100-400mm GM", focal: "100mm", aperture: "f/9", shutter: "1/800s", iso: "1250" },
+      { file: "nationalpark-schweiz", caption: "Nationalpark - Schweiz", w: 7008, h: 4672, camera: "Sony A7 IV", lens: "28-70mm F2.8 DG DN | Contemporary 021", focal: "70mm", aperture: "f/6.3", shutter: "1/60s", iso: "1000" },
+      { file: "saentis-schweiz", caption: "Säntis - Schweiz", w: 7008, h: 4672, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "44.6mm", aperture: "f/4", shutter: "1/250s", iso: "5000" },
       { file: "seealpsee-appenzell", caption: "Seealpsee · Appenzell", w: 1800, h: 1199, camera: "Sony A7 IV" },
       { file: "winterabend-alpen", caption: "Winterabend · Alpen", w: 1800, h: 1199, camera: "Sony A7 IV" },
     ],
@@ -52,6 +55,7 @@ export const CATEGORIES = [
       { file: "jdm-car-meet-japan", caption: "JDM Car Meet · Japan", w: 1333, h: 2000, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "30.4mm", aperture: "f/4", shutter: "1/100s", iso: "8000" },
       { file: "jdm-nacht-japan", caption: "JDM Nacht · Japan", w: 1333, h: 2000, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "60mm", aperture: "f/4.5", shutter: "1/125s", iso: "8000" },
       { file: "porsche-911-gt3", caption: "Porsche 911 GT3", w: 1800, h: 1199, camera: "Sony A7 IV" },
+      { file: "silvia-tokyo", caption: "Silvia - Tokyo", w: 4672, h: 7008, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "44.3mm", aperture: "f/6.3", shutter: "1/160s", iso: "4000" },
     ],
   },
   {
