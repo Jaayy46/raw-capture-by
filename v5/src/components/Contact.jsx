@@ -88,7 +88,7 @@ export default function Contact() {
             {[
               ['Mail', SITE.email, `mailto:${SITE.email}`],
               ['Instagram', `@${SITE.instagram}`, `https://instagram.com/${SITE.instagram}`],
-              ['Unsplash', SITE.unsplash, null],
+              ['Unsplash', `@${SITE.unsplash}`, SITE.unsplashUrl],
               ['Standort', `${SITE.location}, ${SITE.country}`, null],
             ].map(([k, v, href]) => (
               <div key={k} className="flex items-baseline gap-5 border-b border-rule py-3.5">

@@ -9,7 +9,8 @@ export const SITE = {
   domain:    'raw-capture-by.com',
   email:     'raw.capture.by@gmail.com',
   instagram: 'raw_capture_by',
-  unsplash:  'Livio Raschle',
+  unsplash:  'raw_capture_by',
+  unsplashUrl: 'https://unsplash.com/de/@raw_capture_by',
   camera:    'Sony A7 IV',
 }
 
