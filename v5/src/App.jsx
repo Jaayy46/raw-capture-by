@@ -8,9 +8,13 @@ import About    from './components/About.jsx'
 import Contact  from './components/Contact.jsx'
 import Footer   from './components/Footer.jsx'
 
-/* Appears once the hero is behind you and steps aside when the
-   enquiry form itself is on screen — a call to action that follows
-   you onto the thing it is calling you to is just noise. */
+/* Mobile only. The fixed header already carries "Projekt anfragen"
+   on desktop, so a floating copy there was redundant — and it sat in
+   the bottom-right corner covering body text and captions as you
+   scrolled. On mobile the header collapses to a burger, so this is
+   the only standing call to action.
+   It appears once the hero is behind you and steps aside when the
+   form itself is on screen. */
 function StickyCta() {
   const [show, setShow] = useState(false)
 
@@ -28,14 +32,14 @@ function StickyCta() {
   }, [])
 
   return (
-    <div className={`fixed bottom-4 right-4 z-30 transition-all duration-300
+    <div className={`md:hidden fixed inset-x-4 bottom-4 z-30 transition-all duration-300
       ${show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'}`}>
       <button
         onClick={() => document.getElementById('anfrage')?.scrollIntoView({ behavior: 'smooth' })}
         tabIndex={show ? 0 : -1}
         aria-hidden={!show}
-        className="bg-ink text-paper text-[0.9375rem] font-medium px-6 py-3.5
-          shadow-[0_2px_16px_rgba(25,27,25,0.18)] hover:bg-ink2 transition-colors"
+        className="w-full bg-ink text-paper text-[0.9375rem] font-medium px-6 py-4
+          shadow-[0_2px_16px_rgba(25,27,25,0.22)] hover:bg-ink2 transition-colors"
       >
         Projekt anfragen
       </button>

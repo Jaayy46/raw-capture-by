@@ -1,7 +1,4 @@
-import { CATEGORIES } from '../data/photos.js'
 import { SITE, GEAR } from '../data/site.js'
-
-const portrait = CATEGORIES.find(c => c.id === 'landschaft').photos[0]
 
 export default function About() {
   return (
@@ -42,13 +39,14 @@ export default function About() {
 
         <figure className="m-0">
           <img
-            src={`/media/full/${portrait.file}.webp`}
-            alt={portrait.caption}
+            src="/media/full/portrait-livio.webp"
+            alt={`${SITE.name}, Fotograf und Videograf im ${SITE.location}`}
+            width={933} height={1400}
             loading="lazy" decoding="async"
-            className="w-full aspect-[4/5] object-cover bg-paper"
+            className="w-full aspect-[3/4] object-cover object-top bg-paper"
           />
           <figcaption className="mt-3 text-[0.8125rem] text-ink3">
-            {portrait.caption}. Noch kein Portrait von mir — kommt.
+            {SITE.first} im Appenzell, kurz nach Sonnenaufgang.
           </figcaption>
         </figure>
       </div>

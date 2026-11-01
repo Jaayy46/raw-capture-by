@@ -31,6 +31,13 @@ for (const cat of CATEGORIES)
     for (const set of ['full', 'thumb'])
       wanted.push([join(SRC[set], `${p.file}.webp`), join(OUT, set, `${p.file}.webp`)])
 
+// The portrait is not gallery work, so it lives outside photos.js —
+// and ships unwatermarked, because it is a picture OF Livio.
+wanted.push([
+  join(SRC.full, 'portrait-livio.webp'),
+  join(OUT, 'full', 'portrait-livio.webp'),
+])
+
 if (existsSync(SRC.video))
   for (const f of await readdir(SRC.video))
     if (!f.startsWith('.')) wanted.push([join(SRC.video, f), join(OUT, 'video', f)])
