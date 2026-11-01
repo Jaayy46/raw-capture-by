@@ -70,6 +70,8 @@ export const CATEGORIES = [
   {
     id: "architektur", label: "Architektur", desc: "Torii, Burgen und Linien.",
     photos: [
+      { file: "castle-of-osaka-japan", caption: "Castle of Osaka - Japan", w: 4672, h: 7008, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "36.3mm", aperture: "f/7.1", shutter: "1/320s", iso: "250" },
+      { file: "dai-heiwa-kinento-japan", caption: "Dai Heiwa Kinentō - Japan", w: 4383, h: 6576, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "24mm", aperture: "f/8", shutter: "1/250s", iso: "100" },
       { file: "fushimi-inari-kyoto", caption: "Fushimi Inari · Kyoto", w: 1333, h: 2000, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "24mm", aperture: "f/6.3", shutter: "1/250s", iso: "5000" },
       { file: "matsumoto-castle-japan", caption: "Matsumoto Castle · Japan", w: 1500, h: 2000, camera: "Sony A7 IV", lens: "Sigma 24-70mm f/2.8 Art", focal: "30.7mm", aperture: "f/6.3", shutter: "1/160s", iso: "400" },
       { file: "santana-madeira", caption: "Santana · Madeira", w: 1800, h: 1199, camera: "Sony A7 IV" },
