@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { CATEGORIES } from '../data/photos.js'
 import Lightbox from './Lightbox.jsx'
 
@@ -11,13 +11,28 @@ const FILTERS = [
   ...CATEGORIES.map(c => ({ id: c.id, label: c.label, count: c.photos.length })),
 ]
 
+/* Unfiltered, the gallery ran 22 screens on a phone and buried
+   Leistungen and the enquiry form below it. A first serving instead,
+   with the rest a tap away — the pictures stay full width, which is
+   the point of a portfolio, but nobody has to wade to reach the part
+   that wins work. */
+const FIRST_SERVING = () =>
+  typeof window !== 'undefined' && window.matchMedia('(max-width: 560px)').matches ? 6 : 12
+
 export default function Work() {
   const [filter, setFilter] = useState('alle')
   const [open, setOpen]     = useState(null)
+  const [limit, setLimit]   = useState(FIRST_SERVING)
 
-  const shown = useMemo(
+  const matching = useMemo(
     () => filter === 'alle' ? ALL : ALL.filter(p => p.cat === filter),
     [filter])
+
+  // A new filter starts a new first serving.
+  useEffect(() => { setLimit(FIRST_SERVING()) }, [filter])
+
+  const shown  = matching.slice(0, limit)
+  const hidden = matching.length - shown.length
 
   return (
     <section id="arbeiten" className="px-5 md:px-10 py-16 md:py-24 scroll-mt-20">
@@ -52,7 +67,7 @@ export default function Work() {
         </div>
 
         <p aria-live="polite" className="sr-only">
-          {shown.length} Bilder werden angezeigt
+          {shown.length} von {matching.length} Bildern werden angezeigt
         </p>
 
         <div className="masonry mt-10">
@@ -79,13 +94,28 @@ export default function Work() {
             </button>
           ))}
         </div>
+
+        {hidden > 0 && (
+          <button
+            onClick={() => setLimit(matching.length)}
+            className="mt-8 w-full sm:w-auto border border-rule text-ink
+              px-7 min-h-[44px] py-3 text-[0.9375rem] hover:border-ink
+              hover:bg-ink hover:text-paper transition-colors"
+          >
+            Weitere {hidden} {hidden === 1 ? 'Bild' : 'Bilder'} anzeigen
+          </button>
+        )}
       </div>
 
-      {/* Plain mount/unmount. AnimatePresence held the dialog on
+      {/* Lightbox gets `matching`, not `shown`: once a picture is open
+          the reader is browsing and should reach every image in this
+          filter without first tapping "Weitere anzeigen". shown is a
+          prefix of matching, so the index still lines up.
+          Plain mount/unmount. AnimatePresence held the dialog on
           screen after its state went away — and a lightbox that will
           not close is worse than one that does not fade out. */}
       {open !== null && (
-        <Lightbox items={shown} index={open}
+        <Lightbox items={matching} index={open}
           onClose={() => setOpen(null)} onMove={setOpen} />
       )}
     </section>
