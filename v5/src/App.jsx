@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Nav      from './components/Nav.jsx'
 import Hero     from './components/Hero.jsx'
 import Work     from './components/Work.jsx'
-import Series   from './components/Series.jsx'
+import Film     from './components/Film.jsx'
 import Services from './components/Services.jsx'
 import About    from './components/About.jsx'
 import Contact  from './components/Contact.jsx'
@@ -54,7 +54,7 @@ export default function App() {
       <main id="inhalt">
         <Hero />
         <Work />
-        <Series />
+        <Film />
         <Services />
         <About />
         <Contact />

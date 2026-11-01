@@ -1,19 +1,23 @@
 import { useState, useMemo } from 'react'
 import { CATEGORIES } from '../data/photos.js'
-import { LIGHT } from '../data/site.js'
 import Lightbox from './Lightbox.jsx'
 
 const ALL = CATEGORIES.flatMap(c => c.photos.map(p => ({ ...p, cat: c.id })))
+
+// Straight from the gallery data, so a filter can never promise a
+// category the photographs do not actually have.
+const FILTERS = [
+  { id: 'alle', label: 'Alles', count: ALL.length },
+  ...CATEGORIES.map(c => ({ id: c.id, label: c.label, count: c.photos.length })),
+]
 
 export default function Work() {
   const [filter, setFilter] = useState('alle')
   const [open, setOpen]     = useState(null)
 
-  const shown = useMemo(() => {
-    if (filter === 'alle') return ALL
-    const cats = LIGHT.find(l => l.id === filter)?.cats ?? []
-    return ALL.filter(p => cats.includes(p.cat))
-  }, [filter])
+  const shown = useMemo(
+    () => filter === 'alle' ? ALL : ALL.filter(p => p.cat === filter),
+    [filter])
 
   return (
     <section id="arbeiten" className="px-5 md:px-10 py-16 md:py-24 scroll-mt-20">
@@ -22,19 +26,16 @@ export default function Work() {
         <div className="max-w-prose">
           <h2 className="display display-l text-ink">Arbeiten</h2>
           <p className="lede mt-4">
-            Sortiert nach dem Licht, in dem sie entstanden sind. Das ist das
-            Einzige, was eine Alpenwand im Morgengrauen und eine Bühne um
-            Mitternacht gemeinsam haben.
+            Berge, Bühnen, Strassen, Tiere. Was mich interessiert, nehme ich mit —
+            und das sieht man.
           </p>
         </div>
 
-        <div role="group" aria-label="Nach Licht filtern"
+        <div role="group" aria-label="Nach Thema filtern"
           className="mt-8 flex flex-wrap gap-2">
-          {LIGHT.map(l => {
+          {FILTERS.map(l => {
             const active = filter === l.id
-            const count = l.id === 'alle'
-              ? ALL.length
-              : ALL.filter(p => (l.cats ?? []).includes(p.cat)).length
+            const count = l.count
             return (
               <button key={l.id} onClick={() => setFilter(l.id)}
                 aria-pressed={active}

@@ -29,12 +29,9 @@ export default function About() {
             </p>
           </div>
 
-          <h3 className="display display-m text-ink mt-10" style={{ fontSize: '1.125rem' }}>
-            Ausrüstung
-          </h3>
-          <ul className="mt-3 space-y-1.5 text-[0.9375rem] text-ink2">
-            {GEAR.map(g => <li key={g}>{g}</li>)}
-          </ul>
+          <p className="mt-8 text-[0.9375rem] leading-relaxed text-ink2 max-w-prose">
+            {GEAR}
+          </p>
         </div>
 
         <figure className="m-0">

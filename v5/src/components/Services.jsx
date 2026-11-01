@@ -9,8 +9,8 @@ export default function Services() {
         <div className="max-w-prose">
           <h2 className="display display-l text-ink">Was ich mache</h2>
           <p className="lede mt-4">
-            Preise richten sich nach Aufwand, Ort und Nutzung. Schreib mir, was du
-            vorhast, und du bekommst eine konkrete Offerte.
+            Erzähl mir einfach, was dir vorschwebt. Dann finden wir zusammen heraus,
+            was dafür Sinn macht — und was es kostet.
           </p>
         </div>
 
